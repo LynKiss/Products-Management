@@ -1,6 +1,7 @@
 extends ../../layouts/default.pug
 include ../../mixins/filterstatus.pug
 include ../../mixins/search.pug
+include ../../mixins/pagination.pug
 
 block main
     h1 Danh sách sản phẩm
@@ -46,20 +47,4 @@ block main
                             td
                                 button.btn.btn-warning.btn-sm Sửa
                                 button.btn.btn-danger.btn-sm.ml-1 Xóa
-
-                    //- tr
-                        td 2
-                        td
-                            img(
-                                src="https://i.dummyjson.com/data/products/1/thumbnail.jpg"
-                                alt="Sản phẩm 2"
-                                width="100px"
-                                height="auto"
-                            )
-                        td Sản phẩm 2
-                        td 150$
-                        td
-                            a.badge.badge-danger(href="#") Dừng hoạt động
-                        td
-                            button.btn.btn-warning.btn-sm Sửa
-                            button.btn.btn-danger.btn-sm.ml-1 Xóa
+    +pagination(pagination)
