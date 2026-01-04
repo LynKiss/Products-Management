@@ -58,6 +58,14 @@ if (formChangeMulti) {
     const inputsChecked = checkboxMulti.querySelectorAll(
       "input[name='id']:checked" // Lấy ra các ô đã checked
     );
+    const typeChange = e.target.elements.type.value; // Lấy dữ liệu của ô hành động đang chọn
+    if (typeChange == "delete-all") {
+      const isComfirm = confirm(" Bạn có muốn xóa danh sách này không"); // Nếu mà chọn delete-all thì gửi id lên sv
+      if (!isComfirm) {
+        // ấn hủy thì không gửi nữa
+        return;
+      }
+    }
     if (inputsChecked.length > 0) {
       let ids = [];
       const inputIds = formChangeMulti.querySelector("input[name='ids']"); // cái ô text input lấy ra để gắn mảng vào
