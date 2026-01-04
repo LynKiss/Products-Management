@@ -20,7 +20,6 @@ if (buttonChangeStatus.length > 0) {
 
 //CheckBox Multi
 const checkboxMulti = document.querySelector("[checkbox-multi]"); // thuộc tính có 1 lên không cần dùng all ( cả đoạn html)
-
 if (checkboxMulti) {
   const inputcheckAll = checkboxMulti.querySelector("input[name='checkall']"); // Lấy ra nút check all trong checkboxmulti
   const inputIds = checkboxMulti.querySelectorAll("input[name='id']"); // lấy ra nhiều nút check id
@@ -75,3 +74,23 @@ if (formChangeMulti) {
   });
 }
 //End Change-multi
+
+//Delete Item
+buttonDelete = document.querySelectorAll("[button-delete]");
+if (buttonDelete.length > 0) {
+  const formDelteItem = document.querySelector("#form-delete-item");
+  const path = formDelteItem.getAttribute("data-path");
+  buttonDelete.forEach((button) => {
+    button.addEventListener("click", () => {
+      const isComfirm = confirm("Có xác nhận xóa không ?");
+      if (isComfirm) {
+        const id = button.getAttribute("data-id");
+
+        const action = `${path}/${id}?_method=DELETE`;
+        formDelteItem.action = action;
+        formDelteItem.submit();
+      }
+    });
+  });
+}
+//End Delete Item
