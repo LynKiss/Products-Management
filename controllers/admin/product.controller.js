@@ -64,10 +64,14 @@ module.exports.changeMulti = async (req, res) => {
   res.redirect("/admin/products");
 };
 // [DELETE] /admin/products/delete/:id
-module.exports.deleteItem = async (req, res) => {
+module.exports.deletetItem = async (req, res) => {
   const id = req.params.id;
   console.log(id);
-  await Product.deleteOne({ _id: id });
+  // await Product.deleteOne({ _id: id });   // Xóa cứng  ( có thể dùng chức năng thùng rác)
+  await Product.updateOne(
+    { _id: id },
+    { deleted: true, deletedAt: new Date() } // Lưu thời gian xóa
+  ); // Xóa mềm  ( Khôi phục thì cập nhật lại thành false )
 
   res.redirect("/admin/products");
 };
