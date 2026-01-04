@@ -1,4 +1,6 @@
 const express = require("express");
+var methodOverride = require("method-override");
+
 require("dotenv").config();
 const route = require("./routes/client/index.route");
 const routeAdmin = require("./routes/admin/index.route");
@@ -6,12 +8,13 @@ const database = require("./config/database");
 const systemConfig = require("./config/system");
 database.connect();
 app = express();
-const port = process.env.PORT;
 
-app.set("views", "./views"); // cấu hình pug
+app.use(methodOverride("_method"));
+
+const port = process.env.PORT;
+app.set("views", "./views");
 app.set("view engine", "pug");
-app.use(express.static("public")); // Sử dụng được những file tĩnh trong này có thể public ra bên ngoài
-// App local variables
+app.use(express.static("public"));
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 route(app);
 routeAdmin(app);
