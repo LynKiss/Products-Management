@@ -176,7 +176,7 @@ module.exports.editPatch = async (req, res) => {
   }
   res.redirect(`${systemConfig.prefixAdmin}/products`);
 };
-// [GET] /admin/products/edit/:id
+// [GET] /admin/products/detail/:id
 module.exports.detail = async (req, res) => {
   try {
     const find = {

@@ -18,3 +18,23 @@ module.exports.index = async (req, res) => {
     products: newProducts,
   });
 };
+
+// [GET] /products/detail/:slug
+module.exports.detail = async (req, res) => {
+  try {
+    const find = {
+      deleted: false,
+      slug: req.params.slug,
+      status: "active",
+    };
+    const product = await Product.findOne(find); // find thì là trả về nhiều bản ghi findOne là 1
+    console.log(product);
+    res.render("client/pages/products/detail", {
+      pageTitle: product.title,
+      product: product,
+    });
+  } catch (error) {
+    res.redirect(`/products`);
+    req.flash("error", `Không tồn tại sản phẩm này !`);
+  }
+};
