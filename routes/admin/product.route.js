@@ -16,5 +16,12 @@ router.post(
   validates.createPost, // middlewe kiểm tra điều kiện
   controller.createPost
 ); // upload.single("thumbnail") upload ảnh
+router.get("/edit/:id", controller.edit);
+router.patch(
+  "/edit/:id",
+  upload.single("thumbnail"),
+  validates.createPost,
+  controller.editPatch
+);
 
 module.exports = router;

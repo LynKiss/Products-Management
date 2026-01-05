@@ -2,11 +2,12 @@ extends ../../layouts/default.pug
 include ../../mixins/alert.pug
 
 block main
+  +alertSuccess(5000)
   +alertError(5000)
-  h1(class="mb-4") Thêm mới sản phẩm
+  h1(class="mb-4") Chỉnh sửa sản phẩm
   form(
-    action=`${prefixAdmin}/products/create`
-    id="form-create-product"
+    action=`${prefixAdmin}/products/edit/${product.id}?_method=PATCH`
+    id="form-edit-product"
     method="POST"
     enctype="multipart/form-data"
   )
@@ -19,6 +20,7 @@ block main
         name="title"
         required
         placeholder="Nhập tiêu đề..."
+        value=product.title
       )
 
     //- Mô tả
@@ -29,6 +31,7 @@ block main
         name="description"
         rows="4"
         placeholder="Nhập mô tả..."
+        value=product.description
       )
 
     //- Giá
@@ -39,7 +42,7 @@ block main
         id="price"
         name="price"
         min="0"
-        value="0"
+        value=product.price
       )
 
     //- % Giảm giá
@@ -51,7 +54,7 @@ block main
         name="discountPercentage"
         min="0"
         max="100"
-        value="0"
+        value=product.discountPercentage
       )
 
     //- Số lượng
@@ -62,7 +65,8 @@ block main
         id="stock"
         name="stock"
         min="0"
-        value="0"
+        value=product.stock
+
       )
 
     //- Ảnh (NHẬP LINK)
@@ -79,7 +83,7 @@ block main
       .image-preview-container(upload-image-preview-wrapper)
         .image-preview-content
           img(
-            src=""
+            src=product.thumbnail
             upload-image-preview
           )
         span(close-image) x
@@ -93,7 +97,7 @@ block main
           name="status"
           id="status-active"
           value="active"
-          checked
+          checked=(product.status == "active" ? true : false)
         )
         label.form-check-label(for="status-active") Hoạt động
       .form-check
@@ -102,6 +106,7 @@ block main
           name="status"
           id="status-inactive"
           value="inactive"
+          checked=(product.status == "inactive" ? true : false)
         )
         label.form-check-label(for="status-inactive") Dừng hoạt động
 
@@ -114,10 +119,11 @@ block main
         name="position"
         min="1"
         placeholder="Tự động"
+        value=product.position
       )
 
     .mt-3
-      button.btn.btn-primary(type="submit") Tạo mới
+      button.btn.btn-primary(type="submit") Cập nhật
       a.btn.btn-secondary.ml-2(href=`${prefixAdmin}/products`) Quay lại
 
 
