@@ -1,4 +1,5 @@
 const Product = require("../../models/product.model");
+const systemConfig = require("../../config/system");
 const filterStatusHelper = require("../../helpers/filterStatus");
 const searchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
@@ -73,6 +74,7 @@ module.exports.changeMulti = async (req, res) => {
         { _id: { $in: ids } },
         { deleted: "true", deletedAt: new Date() } // Xóa mềm nhiều
       );
+      req.flash("success", `Xóa ${ids.length}sản phẩm thành công !`);
       break;
     case "change-position":
       for (const item of ids) {
@@ -106,6 +108,29 @@ module.exports.deletetItem = async (req, res) => {
     { _id: id },
     { deleted: true, deletedAt: new Date() } // Lưu thời gian xóa
   ); // Xóa mềm  ( Khôi phục thì cập nhật lại thành false )
+  req.flash("success", `Xóa sản phẩm id :${id} thành công !`);
 
   res.redirect(req.get("Referrer") || "/");
+};
+// [GET] /admin/products/Create
+module.exports.create = async (req, res) => {
+  res.render("admin/pages/products/create.pug", {
+    pageTitle: "Trang thêm sản phẩm",
+  });
+};
+// [POST] /admin/products/Create
+module.exports.createPost = async (req, res) => {
+  console.log(req.body);
+  req.body.price = parseInt(req.body.price);
+  req.body.discountPercentage = parseInt(req.body.discountPercentage);
+  req.body.stock = parseInt(req.body.stock);
+  if (req.body.position == "") {
+    const countProducts = await Product.countDocuments();
+    req.body.position = countProducts + 1; // nếu không truyền vào vị trí thì tự động đếm bản ghi trong db và tăng 1
+  } else {
+    req.body.position = parseInt(req.body.position); // Nếu nhập thì chuyển sang int
+  }
+  const product = new Product(req.body); // Tạo 1 model sản phẩm
+  await product.save(); // Lưu vào database
+  res.redirect(`${systemConfig.prefixAdmin}/products`);
 };
