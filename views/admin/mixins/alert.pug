@@ -4,3 +4,9 @@ mixin alertSuccess(time)
             div(class="alert alert-success" show-alert data-time=time)
                 = messages.success[0]  
                 span(close-alert) X
+mixin alertError(time)
+    - if (messages.error && messages.error.length)
+        .message.info
+            div(class="alert alert-danger" show-alert data-time=time)
+                = messages.error[0]  
+                span(close-alert) X
