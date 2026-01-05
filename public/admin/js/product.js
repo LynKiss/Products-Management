@@ -72,7 +72,17 @@ if (formChangeMulti) {
       inputsChecked.forEach((input) => {
         // lặp qua để lấy dữ liệu
         const id = input.value; // có thể dùng các tương tự như input.setAttribute("value")
-        ids.push(id);
+        if (typeChange == "change-position") {
+          const position = input
+            .closest("tr") // đi ra ngoài thẻ cha để lấy thẻ con của nó.closest("tr")
+            .querySelector("input[name='position']").value; // Lấy được value vị trí của các phần tử
+
+          if (position && position.trim() !== "") {
+            ids.push(`${id}-${position}`);
+          }
+        } else {
+          ids.push(id);
+        }
       });
       inputIds.value = ids.join(","); // convert mảng sang dạng string cách nhau dấu ,
       formChangeMulti.submit(); // gọi submit để gửi đi ( gọi đến file pug xong action gửi đi đến trang tiếp  action=`${prefixAdmin}/products/change-multi?_method=PATCH`)

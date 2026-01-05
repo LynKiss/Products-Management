@@ -27,6 +27,7 @@ module.exports.index = async (req, res) => {
     countProducts
   );
   const products = await Product.find(find)
+    .sort({ position: "desc" }) // desc là giảm dần asc là tăng dần
     .limit(objectPagination.limitItems) // limit số sản phẩm mỗi trang
     .skip(objectPagination.skip); // bỏ qua số lượng sản phẩm này
   res.render("admin/pages/products/index", {
@@ -63,6 +64,24 @@ module.exports.changeMulti = async (req, res) => {
         { _id: { $in: ids } },
         { deleted: "true", deletedAt: new Date() } // Xóa mềm nhiều
       );
+      break;
+    case "change-position":
+      for (const item of ids) {
+        let [id, position] = item.split("-"); //Lấy ra chuỗi string xong cắt thành mảng cách nhau bằng dấu "-"
+        position = parseInt(position);
+
+        // Validate position is a valid number
+        if (isNaN(position)) {
+          continue; // Skip invalid entries
+        }
+
+        await Product.updateOne(
+          { _id: id },
+          {
+            position: position,
+          }
+        );
+      }
       break;
     default:
       break;
