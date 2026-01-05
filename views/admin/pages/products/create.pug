@@ -65,14 +65,22 @@ block main
 
     //- Ảnh (NHẬP LINK)
     .form-group
-      label(for="thumbnail") Ảnh 
+      label(for="thumbnail" upload-image) Ảnh 
       input.form-control(
         type="file"
         class="form-control-file"
         id="thumbnail"
         name="thumbnail"
         accept="image/*"
+        upload-image-input
       )
+      .image-preview-container(upload-image-preview-wrapper)
+        .image-preview-content
+          img(
+            src=""
+            upload-image-preview
+          )
+        span(close-image) x
 
     //- Trạng thái (RADIO)
     .form-group
