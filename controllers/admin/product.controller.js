@@ -176,3 +176,21 @@ module.exports.editPatch = async (req, res) => {
   }
   res.redirect(`${systemConfig.prefixAdmin}/products`);
 };
+// [GET] /admin/products/edit/:id
+module.exports.detail = async (req, res) => {
+  try {
+    const find = {
+      deleted: false,
+      _id: req.params.id,
+    };
+    const product = await Product.findOne(find); // find thì là trả về nhiều bản ghi findOne là 1
+    console.log(product);
+    res.render("admin/pages/products/detail", {
+      pageTitle: product.title,
+      product: product,
+    });
+  } catch (error) {
+    res.redirect(` ${systemConfig.prefixAdmin}/products`);
+    req.flash("error", `Không tồn tại sản phẩm này !`);
+  }
+};
