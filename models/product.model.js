@@ -13,7 +13,7 @@ const productSchema = new mongoose.Schema(
     position: Number,
     slug: {
       type: String,
-      slug: title, // sinh ra chuỗi url khi load trang web trên đường link sẽ hiển thị cái này
+      slug: "title", // sinh ra chuỗi url khi load trang web trên đường link sẽ hiển thị cái này
       unique: true, // Tránh bị trùng url (bật )
     },
     deleted: {

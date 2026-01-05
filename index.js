@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const flash = require("express-flash"); // import thư viện thông báo
 const cookieParser = require("cookie-parser"); // import thư viện thông báo
 const session = require("express-session"); // import thư viện thông báo
+const multer = require("multer");
 
 require("dotenv").config();
 const route = require("./routes/client/index.route");

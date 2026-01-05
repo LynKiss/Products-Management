@@ -6,6 +6,7 @@ block main
   form(
     action=`${prefixAdmin}/products/create`
     method="POST"
+    enctype="multipart/form-data"
   )
     //- Tiêu đề
     .form-group
@@ -64,12 +65,13 @@ block main
 
     //- Ảnh (NHẬP LINK)
     .form-group
-      label(for="thumbnail") Ảnh (link)
+      label(for="thumbnail") Ảnh 
       input.form-control(
-        type="text"
+        type="file"
+        class="form-control-file"
         id="thumbnail"
         name="thumbnail"
-        placeholder="https://example.com/image.jpg"
+        accept="image/*"
       )
 
     //- Trạng thái (RADIO)

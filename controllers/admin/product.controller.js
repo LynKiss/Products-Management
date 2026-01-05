@@ -120,7 +120,6 @@ module.exports.create = async (req, res) => {
 };
 // [POST] /admin/products/Create
 module.exports.createPost = async (req, res) => {
-  console.log(req.body);
   req.body.price = parseInt(req.body.price);
   req.body.discountPercentage = parseInt(req.body.discountPercentage);
   req.body.stock = parseInt(req.body.stock);
@@ -130,6 +129,7 @@ module.exports.createPost = async (req, res) => {
   } else {
     req.body.position = parseInt(req.body.position); // Nếu nhập thì chuyển sang int
   }
+  req.body.thumbnail = `/uploads/${req.file.filename}`;
   const product = new Product(req.body); // Tạo 1 model sản phẩm
   await product.save(); // Lưu vào database
   res.redirect(`${systemConfig.prefixAdmin}/products`);
