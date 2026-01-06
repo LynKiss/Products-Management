@@ -1,8 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
-const storageMuler = require("../../helpers/storage");
-const upload = multer({ storage: storageMuler() });
+const upload = multer();
+// const storageMuler = require("../../helpers/storage");
+
+const uploadCloud = require("../../middlewares/admin/uploadCloud.middleware");
+
+// const upload = multer({ storage: storageMuler() });
 const controller = require("../../controllers/admin/product.controller");
 const validates = require("../../validates/admin/product.validate");
 router.get("/", controller.index);
@@ -13,6 +17,7 @@ router.get("/create", controller.create); // Phương thức trả về giao di�
 router.post(
   "/create",
   upload.single("thumbnail"),
+  uploadCloud.upload,
   validates.createPost, // middlewe kiểm tra điều kiện
   controller.createPost
 ); // upload.single("thumbnail") upload ảnh
