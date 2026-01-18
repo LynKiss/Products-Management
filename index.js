@@ -5,6 +5,7 @@ const flash = require("express-flash"); // import thư viện thông báo
 const cookieParser = require("cookie-parser"); // import thư viện thông báo
 const session = require("express-session"); // import thư viện thông báo
 const multer = require("multer");
+var path = require("path");
 
 require("dotenv").config();
 const route = require("./routes/client/index.route");
@@ -58,8 +59,13 @@ app.use((req, res, next) => {
 
   next();
 });
-
 //End flast
+//TinyMCE
+app.use(
+  "/tinymce",
+  express.static(path.join(__dirname, "node_modules", "tinymce"))
+);
+//End TinyMCE
 const port = process.env.PORT;
 app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");

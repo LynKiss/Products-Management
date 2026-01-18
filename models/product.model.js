@@ -26,6 +26,6 @@ const productSchema = new mongoose.Schema(
     timestamps: true, // Tự thêm thời gian tạo và update
   }
 );
-const Product = mongoose.model("Product", productSchema, "products");
+const Product = mongoose.model("Product", productSchema, "products"); // mongoose.model(modelName, schema, collectionName)
 
 module.exports = Product;
