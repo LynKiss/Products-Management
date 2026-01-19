@@ -27,12 +27,13 @@ block main
     .form-group
       label(for="description") Mô tả
       textarea.form-control(
-        id="description"
-        name="description"
-        rows="4"
-        placeholder="Nhập mô tả..."
-        value=product.description
+       id="description"
+       name="description"
+       rows="4"
+       placeholder="Nhập mô tả..."
       )
+       | #{product.description}
+
 
     //- Giá
     .form-group

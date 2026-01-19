@@ -1,13 +1,13 @@
 const { prefixAdmin } = require("../../config/system");
 const ProductCategory = require("../../models/product-category");
 const createTreeHelper = require("../../helpers/createTree");
+const systemConfig = require("../../config/system");
 
 // [GET] /admin/products-category
 module.exports.index = async (req, res) => {
   let find = {
     deleted: false,
   };
-
   const records = await ProductCategory.find(find);
   const Newrecord = createTreeHelper.tree(records);
   res.render("admin/pages/products-category/index", {
@@ -37,6 +37,24 @@ module.exports.createPost = async (req, res) => {
     req.body.position = parseInt(req.body.position);
   }
   const productCategory = new ProductCategory(req.body);
+  console.log(productCategory);
   await productCategory.save();
   res.redirect(`${prefixAdmin}/products-category`);
+};
+// [GET] /admin/product-category/detail/:id
+module.exports.detail = async (req, res) => {
+  try {
+    const find = {
+      deleted: false,
+      _id: req.params.id,
+    };
+    const productCategory = await ProductCategory.findOne(find); // find thì là trả về nhiều bản ghi findOne là 1
+    res.render("admin/pages/products-category/detail", {
+      pageTitle: productCategory.title,
+      product: productCategory,
+    });
+  } catch (error) {
+    res.redirect(` ${systemConfig.prefixAdmin}/products-category`);
+    req.flash("error", `Không tồn tại danh mục này !`);
+  }
 };

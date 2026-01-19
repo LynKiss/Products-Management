@@ -52,19 +52,24 @@ block main
       )
 
 
-    div(class="form-group upload-image")
-      label(for="thumbnail") Ảnh
-      input(
+    //- Ảnh (NHẬP LINK)
+    .form-group
+      label(for="thumbnail" upload-image) Ảnh 
+      input.form-control(
         type="file"
-        class="form-control-file upload-image-input"
+        class="form-control-file"
         id="thumbnail"
         name="thumbnail"
         accept="image/*"
+        upload-image-input
       )
-      img(
-        src=""
-        class="image-preview upload-image-preview"
-      )
+      .image-preview-container(upload-image-preview-wrapper)
+        .image-preview-content
+          img(
+            src=""
+            upload-image-preview
+          )
+        span(close-image) x
 
 
     div(class="form-group")
@@ -112,3 +117,5 @@ block main
         type="submit"
         class="btn btn-primary"
       ) Tạo mới
+
+    script(src="/admin/js/product.js")

@@ -66,10 +66,10 @@ if (uploadImage) {
   const uploadImageInput = document.querySelector("[upload-image-input]");
   const uploadImagePreview = document.querySelector("[upload-image-preview]");
   const uploadImagePreviewWrapper = document.querySelector(
-    "[upload-image-preview-wrapper]"
+    "[upload-image-preview-wrapper]",
   );
   const closeImage = document.querySelector(
-    ".image-preview-container [close-image]"
+    ".image-preview-container [close-image]",
   );
 
   uploadImageInput.addEventListener("change", (e) => {
