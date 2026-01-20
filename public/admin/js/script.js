@@ -72,6 +72,14 @@ if (uploadImage) {
     ".image-preview-container [close-image]",
   );
 
+  // Hiển thị preview ảnh đã tồn tại khi tải trang
+  if (
+    uploadImagePreview.src &&
+    uploadImagePreview.src !== window.location.href
+  ) {
+    uploadImagePreviewWrapper.style.display = "block";
+  }
+
   uploadImageInput.addEventListener("change", (e) => {
     const file = e.target.files[0];
     if (file) {

@@ -37,9 +37,31 @@ module.exports.createPost = async (req, res) => {
     req.body.position = parseInt(req.body.position);
   }
   const productCategory = new ProductCategory(req.body);
-  console.log(productCategory);
   await productCategory.save();
   res.redirect(`${prefixAdmin}/products-category`);
+};
+// [GET] /admin/products-category/edit/:id
+module.exports.edit = async (req, res) => {
+  try {
+    let find = {
+      deleted: false,
+      _id: req.params.id,
+    };
+
+    const data = await ProductCategory.findOne(find);
+    const records = await ProductCategory.find({
+      deleted: false,
+    });
+    const Newrecord = createTreeHelper.tree(records);
+    res.render("admin/pages/products-category/edit", {
+      pageTitle: data.title,
+      data: data,
+      records: Newrecord,
+    });
+  } catch (error) {
+    res.redirect(` ${systemConfig.prefixAdmin}/products-category`);
+    req.flash("error", `Không tồn tại danh mục này !`);
+  }
 };
 // [GET] /admin/product-category/detail/:id
 module.exports.detail = async (req, res) => {

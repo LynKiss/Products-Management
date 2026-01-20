@@ -3,11 +3,12 @@ include ../../mixins/alert.pug
 include ../../mixins/select-tree.pug
 
 block main
+  +alertSuccess(5000)
   +alertError(5000)
-  h1(class="mb-4") Thêm mới sản phẩm
+  h1(class="mb-4") Chỉnh sửa danh mục sản phẩm 
   form(
-    action=`${prefixAdmin}/products/create`
-    id="form-create-product"
+    action=`${prefixAdmin}/products/edit/${data.id}?_method=PATCH`
+    id="form-edit-product"
     method="POST"
     enctype="multipart/form-data"
   )
@@ -20,9 +21,10 @@ block main
         name="title"
         required
         placeholder="Nhập tiêu đề..."
+        value=data.title
       )
     div(class="form-group")
-      label(for="product_category_id") Danh mục 
+      label(for="parent_id") Danh mục cha
       //- input(
       //-   type="text"
       //-   class="form-control"
@@ -30,22 +32,24 @@ block main
       //-   name="parent_id"
       //- )
       select(
-        name="product_category_id"
-        id="product_category_id"
+        name="parent_id"
+        id="parent_id"
         class="form-control"
       )
-       option(value="") -- Chọn danh mục  --
-       if(category)
-          +select-tree(category)
+       option(value="") -- Chọn danh mục cha --
+       if(records)
+          +select-tree(records,1,data.parent_id)
     //- Mô tả
     .form-group
       label(for="description") Mô tả
       textarea.form-control(
-        id="description"
-        name="description"
-        rows="4"
-        placeholder="Nhập mô tả..."
+       id="description"
+       name="description"
+       rows="4"
+       placeholder="Nhập mô tả..."
       )
+       | #{data.description}
+
 
     //- Giá
     .form-group
@@ -55,7 +59,7 @@ block main
         id="price"
         name="price"
         min="0"
-        value="0"
+        value=data.price
       )
 
     //- % Giảm giá
@@ -67,7 +71,7 @@ block main
         name="discountPercentage"
         min="0"
         max="100"
-        value="0"
+        value=data.discountPercentage
       )
 
     //- Số lượng
@@ -78,7 +82,8 @@ block main
         id="stock"
         name="stock"
         min="0"
-        value="0"
+        value=data.stock
+
       )
 
     //- Ảnh (NHẬP LINK)
@@ -95,7 +100,7 @@ block main
       .image-preview-container(upload-image-preview-wrapper)
         .image-preview-content
           img(
-            src=""
+            src=data.thumbnail
             upload-image-preview
           )
         span(close-image) x
@@ -109,7 +114,7 @@ block main
           name="status"
           id="status-active"
           value="active"
-          checked
+          checked=(data.status == "active" ? true : false)
         )
         label.form-check-label(for="status-active") Hoạt động
       .form-check
@@ -118,6 +123,7 @@ block main
           name="status"
           id="status-inactive"
           value="inactive"
+          checked=(data.status == "inactive" ? true : false)
         )
         label.form-check-label(for="status-inactive") Dừng hoạt động
 
@@ -130,11 +136,12 @@ block main
         name="position"
         min="1"
         placeholder="Tự động"
+        value=data.position
       )
 
     .mt-3
-      button.btn.btn-primary(type="submit") Tạo mới
-      a.btn.btn-secondary.ml-2(href=`${prefixAdmin}/products`) Quay lại
+      button.btn.btn-primary(type="submit") Cập nhật
+      a.btn.btn-secondary.ml-2(href=`${prefixAdmin}/products-category`) Quay lại
 
 
     script(src="/admin/js/product.js")

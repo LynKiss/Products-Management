@@ -3,6 +3,8 @@ const systemConfig = require("../../config/system");
 const filterStatusHelper = require("../../helpers/filterStatus");
 const searchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
+const ProductCategory = require("../../models/product-category");
+const createTreeHelper = require("../../helpers/createTree");
 // [GET] /admin/products
 module.exports.index = async (req, res) => {
   // Bộ lọc cắt sang helpers
@@ -25,7 +27,7 @@ module.exports.index = async (req, res) => {
       limitItems: 4,
     },
     req.query,
-    countProducts
+    countProducts,
   );
   //Sort
   let sort = {};
@@ -67,20 +69,20 @@ module.exports.changeMulti = async (req, res) => {
       await Product.updateMany({ _id: { $in: ids } }, { status: "active" });
       req.flash(
         "success",
-        `Cập nhật trạng thái ${ids.length}sản phẩm thành công !`
+        `Cập nhật trạng thái ${ids.length}sản phẩm thành công !`,
       );
       break;
     case "inactive":
       await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
       req.flash(
         "success",
-        `Cập nhật trạng thái ${ids.length}sản phẩm thành công !`
+        `Cập nhật trạng thái ${ids.length}sản phẩm thành công !`,
       );
       break;
     case "delete-all":
       await Product.updateMany(
         { _id: { $in: ids } },
-        { deleted: "true", deletedAt: new Date() } // Xóa mềm nhiều
+        { deleted: "true", deletedAt: new Date() }, // Xóa mềm nhiều
       );
       req.flash("success", `Xóa ${ids.length}sản phẩm thành công !`);
       break;
@@ -98,7 +100,7 @@ module.exports.changeMulti = async (req, res) => {
           { _id: id },
           {
             position: position,
-          }
+          },
         );
       }
       break;
@@ -110,11 +112,11 @@ module.exports.changeMulti = async (req, res) => {
 // [DELETE] /admin/products/delete/:id
 module.exports.deletetItem = async (req, res) => {
   const id = req.params.id;
-  console.log(id);
+
   // await Product.deleteOne({ _id: id });   // Xóa cứng  ( có thể dùng chức năng thùng rác)
   await Product.updateOne(
     { _id: id },
-    { deleted: true, deletedAt: new Date() } // Lưu thời gian xóa
+    { deleted: true, deletedAt: new Date() }, // Lưu thời gian xóa
   ); // Xóa mềm  ( Khôi phục thì cập nhật lại thành false )
   req.flash("success", `Xóa sản phẩm id :${id} thành công !`);
 
@@ -122,8 +124,14 @@ module.exports.deletetItem = async (req, res) => {
 };
 // [GET] /admin/products/Create
 module.exports.create = async (req, res) => {
+  let find = {
+    deleted: false,
+  };
+  const category = await ProductCategory.find(find);
+  const newCategory = createTreeHelper.tree(category);
   res.render("admin/pages/products/create.pug", {
     pageTitle: "Trang thêm sản phẩm",
+    category: newCategory,
   });
 };
 // [POST] /admin/products/Create
@@ -152,7 +160,7 @@ module.exports.edit = async (req, res) => {
       _id: req.params.id,
     };
     const product = await Product.findOne(find); // find thì là trả về nhiều bản ghi findOne là 1
-    console.log(product);
+
     res.render("admin/pages/products/edit.pug", {
       pageTitle: "Trang chỉnh sửa sản phẩm",
       product: product,
@@ -176,7 +184,7 @@ module.exports.editPatch = async (req, res) => {
       {
         _id: req.params.id,
       },
-      req.body
+      req.body,
     );
     req.flash("success", `Cập nhật thành công !`);
   } catch (error) {
@@ -192,7 +200,7 @@ module.exports.detail = async (req, res) => {
       _id: req.params.id,
     };
     const product = await Product.findOne(find); // find thì là trả về nhiều bản ghi findOne là 1
-    console.log(product);
+
     res.render("admin/pages/products/detail", {
       pageTitle: product.title,
       product: product,

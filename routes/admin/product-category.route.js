@@ -20,5 +20,6 @@ router.post(
   validate.createPost,
   controller.createPost,
 );
+router.get("/edit/:id", controller.edit);
 router.get("/detail/:id", controller.detail);
 module.exports = router;
