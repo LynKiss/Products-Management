@@ -160,10 +160,18 @@ module.exports.edit = async (req, res) => {
       _id: req.params.id,
     };
     const product = await Product.findOne(find); // find thì là trả về nhiều bản ghi findOne là 1
+<<<<<<< HEAD
+    const category = await ProductCategory.find({
+      deleted: false,
+    });
+    const newCategory = createTreeHelper.tree(category);
+=======
 
+>>>>>>> 532f6bb1c63f8fa8525f3272695a545a4895b3d5
     res.render("admin/pages/products/edit.pug", {
       pageTitle: "Trang chỉnh sửa sản phẩm",
       product: product,
+      category: newCategory,
     });
   } catch (error) {
     res.redirect(` ${systemConfig.prefixAdmin}/products`);
