@@ -1,0 +1,110 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+//- Mixin để tạo dòng checkbox linh hoạt theo số lượng records
+mixin permission-row(title, name, records)
+  tr(data-name=name)
+    td #{title}
+    each item in records
+      td(class="text-center")
+        input(type="checkbox")
+
+block main
+  +alertSuccess(5000)
+  +alertError(5000)
+
+
+  div(data-records=records class="d-none")
+
+  h1(class="mb-4") Phân quyền
+
+  //- Kiểm tra nếu có dữ liệu nhóm quyền trong database
+  if(records && records.length > 0)
+    //- Tính tổng số cột để colspan (1 cột tiêu đề + n cột nhóm quyền)
+    - const totalColumns = records.length + 1
+
+    div(class="text-right")
+      button(
+        type="submit"
+        class="btn btn-primary mb-3"
+        button-submit
+      ) 
+        i(class="fa-solid fa-check mr-1")
+        | Cập nhật
+
+    table(
+      class="table table-hover table-sm table-bordered"
+      table-permissions
+    )
+      thead(class="thead-light")
+        tr
+          th Tính năng
+          each item in records
+            th(class="text-center" data-id=item.id) #{item.title}
+          
+      tbody
+        //- Dòng ẩn lưu ID của các Role để JS dễ dàng thu thập dữ liệu
+        tr(class="d-none" data-name="id")
+          td
+          each item in records
+            td(class="text-center")
+              input(type="text" value=item.id)
+
+        //- --- Nhóm: Danh mục sản phẩm ---
+        tr
+          td(colspan=totalColumns class="bg-light")
+            b Danh mục sản phẩm
+        
+        +permission-row("Xem", "products-category_view", records)
+        +permission-row("Thêm mới", "products-category_create", records)
+        +permission-row("Chỉnh sửa", "products-category_edit", records)
+        +permission-row("Xóa", "products-category_delete", records)
+
+        //- --- Nhóm: Danh sách sản phẩm ---
+        tr
+          td(colspan=totalColumns class="bg-light")
+            b Danh sách sản phẩm
+        
+        +permission-row("Xem", "products_view", records)
+        +permission-row("Thêm mới", "products_create", records)
+        +permission-row("Chỉnh sửa", "products_edit", records)
+        +permission-row("Xóa", "products_delete", records)
+
+        tr
+          td(colspan=totalColumns class="bg-light")
+            b Nhóm quyền
+        
+        +permission-row("Xem", "roles_view", records)
+        +permission-row("Thêm mới", "roles_create", records)
+        +permission-row("Chỉnh sửa", "roles_edit", records)
+        +permission-row("Xóa", "roles_delete", records)
+        +permission-row("Phân quyền", "roles_permission", records)
+
+  
+
+    //- Form ẩn để gửi dữ liệu lên server
+    form(
+      id="form-change-permissions"
+      method="POST"
+      action=`${prefixAdmin}/roles/permissions?_method=PATCH`
+      class="d-none"
+    )
+      div(class="form-group")
+        input(
+          type="text"
+          class="form-control"
+          name="permissions"
+        )
+
+  else
+    //- Giao diện hiển thị khi database trống (Tránh lỗi như trong hình bạn gửi)
+    div(class="text-center mt-5")
+      .alert.alert-warning
+        h5 Chưa có nhóm quyền nào!
+        p Vui lòng tạo nhóm quyền trước khi thực hiện phân quyền.
+      a(
+        href=`${prefixAdmin}/roles/create`
+        class="btn btn-success"
+      ) + Tạo nhóm quyền mới
+
+  script(src="/admin/js/role.js")
