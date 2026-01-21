@@ -26,7 +26,7 @@ app.use(
     resave: true,
     saveUninitialized: true,
     cookie: { maxAge: 5 * 60 * 1000 },
-  })
+  }),
 );
 
 // Custom flash middleware (compatible với Express 5)
@@ -63,7 +63,7 @@ app.use((req, res, next) => {
 //TinyMCE
 app.use(
   "/tinymce",
-  express.static(path.join(__dirname, "node_modules", "tinymce"))
+  express.static(path.join(__dirname, "node_modules", "tinymce")),
 );
 //End TinyMCE
 const port = process.env.PORT;
