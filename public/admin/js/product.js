@@ -7,10 +7,10 @@ if (buttonChangeStatus.length > 0) {
     button.addEventListener("click", () => {
       const statusCurrent = button.getAttribute("data-status");
       const id = button.getAttribute("data-id");
-      console.log(id);
+
       let statusChange = statusCurrent == "active" ? "inactive" : "active";
       const active = path + `/${statusChange}/${id}?_method=PATCH`;
-      console.log(active);
+
       formChangeStatus.action = active; // Có thể dùng setAttribute
       formChangeStatus.submit();
     });
@@ -37,7 +37,7 @@ if (checkboxMulti) {
   inputIds.forEach((input) => {
     input.addEventListener("click", () => {
       const countChecked = checkboxMulti.querySelectorAll(
-        "input[name='id']:checked"
+        "input[name='id']:checked",
       ).length;
       if (countChecked == inputIds.length) {
         inputcheckAll.checked = true;
@@ -56,7 +56,7 @@ if (formChangeMulti) {
     e.preventDefault();
     const checkboxMulti = document.querySelector("[checkbox-multi]"); // Lấy ra toàn bộ thẻ trong checkboxmulti
     const inputsChecked = checkboxMulti.querySelectorAll(
-      "input[name='id']:checked" // Lấy ra các ô đã checked
+      "input[name='id']:checked", // Lấy ra các ô đã checked
     );
     const typeChange = e.target.elements.type.value; // Lấy dữ liệu của ô hành động đang chọn
     if (typeChange == "delete-all") {

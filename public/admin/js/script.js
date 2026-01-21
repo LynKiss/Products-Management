@@ -47,7 +47,7 @@ if (buttonPagination) {
 }
 // Show alert
 const showAlert = document.querySelector("[show-alert]");
-console.log(showAlert);
+
 if (showAlert) {
   const time = parseInt(showAlert.getAttribute("data-time"));
   const closeAlert = document.querySelector("[close-alert]");
