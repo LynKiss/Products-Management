@@ -4,7 +4,7 @@ const { prefixAdmin } = require("../../config/system");
 const systemConfig = require("../../config/system");
 const md5 = require("md5");
 
-// [GET] /admin/account
+// [GET] /admin/accounts
 module.exports.index = async (req, res) => {
   let find = {
     deleted: false,
@@ -21,7 +21,7 @@ module.exports.index = async (req, res) => {
   });
 };
 
-// [GET] /admin/account/create
+// [GET] /admin/accounts/create
 module.exports.create = async (req, res) => {
   const roles = await Role.find({ deleted: false });
   res.render("admin/pages/accounts/create", {
@@ -29,7 +29,7 @@ module.exports.create = async (req, res) => {
     roles: roles,
   });
 };
-// [POST] /admin/account/create
+// [POST] /admin/accounts/create
 module.exports.createPost = async (req, res) => {
   const emailExits = await Account.findOne({
     deleted: false,
@@ -46,4 +46,47 @@ module.exports.createPost = async (req, res) => {
 
     res.redirect(`${prefixAdmin}/accounts`);
   }
+};
+// [GET] /admin/accounts/edit/:id
+module.exports.edit = async (req, res) => {
+  try {
+    const id = req.params.id;
+    let find = {
+      deleted: false,
+      _id: id,
+    };
+    const data = await Account.findOne(find);
+    const roles = await Role.find({ deleted: false });
+    res.render("admin/pages/accounts/edit", {
+      pageTitle: "Sửa tài khoản",
+      data: data,
+      roles: roles,
+    });
+  } catch (error) {}
+};
+// [PATCH] /admin/accounts/edit/:id
+module.exports.editPatch = async (req, res) => {
+  const emailExits = await Account.findOne({
+    _id: { $ne: id }, // tìm không bằng id này ( loại bỏ trường hợp)
+    deleted: false,
+    email: req.body.email,
+  });
+  if (emailExits) {
+    req.flash("error", `tài khoản có email này đã tồn tại !`);
+    res.redirect(`${prefixAdmin}/accounts/create`);
+  } else {
+    if (req.body.password) {
+      req.body.password = md5(req.body.password);
+    } else {
+      delete req.body.password;
+    }
+    try {
+      const id = req.params.id;
+      await Account.updateOne({ _id: id }, req.body);
+      req.flash("success", `Cập nhật thành công !`);
+    } catch (error) {
+      req.flash("error", `Cập nhật thất bại !`);
+    }
+  }
+  res.redirect(`${prefixAdmin}/accounts`);
 };
