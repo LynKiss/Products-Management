@@ -1,4 +1,5 @@
 const Product = require("../../models/product.model");
+const Account = require("../../models/account.model");
 const systemConfig = require("../../config/system");
 const filterStatusHelper = require("../../helpers/filterStatus");
 const searchHelper = require("../../helpers/search");
@@ -37,10 +38,20 @@ module.exports.index = async (req, res) => {
     sort.position = "desc";
   }
   //End sort
+
   const products = await Product.find(find)
     .sort(sort) // desc là giảm dần asc là tăng dần
     .limit(objectPagination.limitItems) // limit số sản phẩm mỗi trang
     .skip(objectPagination.skip); // bỏ qua số lượng sản phẩm này
+
+  for (const product of products) {
+    const user = await Account.findOne({
+      _id: product.createdBy.account_id,
+    });
+    if (user) {
+      product.accountFullName = user.fullName;
+    }
+  }
   res.render("admin/pages/products/index", {
     pageTitle: "Trang danh sách sản phẩm",
     products: products,
@@ -82,7 +93,13 @@ module.exports.changeMulti = async (req, res) => {
     case "delete-all":
       await Product.updateMany(
         { _id: { $in: ids } },
-        { deleted: "true", deletedAt: new Date() }, // Xóa mềm nhiều
+        {
+          deleted: true,
+          deletedBy: {
+            account_id: res.locals.user.id,
+            deletedAt: new Date(),
+          },
+        },
       );
       req.flash("success", `Xóa ${ids.length}sản phẩm thành công !`);
       break;
@@ -116,7 +133,13 @@ module.exports.deletetItem = async (req, res) => {
   // await Product.deleteOne({ _id: id });   // Xóa cứng  ( có thể dùng chức năng thùng rác)
   await Product.updateOne(
     { _id: id },
-    { deleted: true, deletedAt: new Date() }, // Lưu thời gian xóa
+    {
+      deleted: true,
+      deletedBy: {
+        account_id: res.locals.user.id,
+        deletedAt: new Date(),
+      },
+    }, // Lưu thời gian xóa
   ); // Xóa mềm  ( Khôi phục thì cập nhật lại thành false )
   req.flash("success", `Xóa sản phẩm id :${id} thành công !`);
 
@@ -148,7 +171,12 @@ module.exports.createPost = async (req, res) => {
   // if (req.file) {
   //   req.body.thumbnail = `/uploads/${req.file.filename}`;
   // }
+  console.log(res.locals.user);
+  req.body.createdBy = {
+    account_id: res.locals.user._id.toString(),
+  };
   const product = new Product(req.body); // Tạo 1 model sản phẩm
+
   await product.save(); // Lưu vào database
   res.redirect(`${systemConfig.prefixAdmin}/products`);
 };
@@ -181,6 +209,7 @@ module.exports.editPatch = async (req, res) => {
   req.body.discountPercentage = parseInt(req.body.discountPercentage);
   req.body.stock = parseInt(req.body.stock);
   req.body.position = parseInt(req.body.position);
+
   if (req.file) {
     req.body.thumbnail = `/uploads/${req.file.filename}`;
   }

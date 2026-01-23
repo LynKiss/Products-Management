@@ -1,0 +1,8 @@
+mixin fomatDateTime(time)
+    p #{moment(time).format('DD/MM/YYYY HH:mm')}
+
+mixin fomatTime(time)
+    p #{moment(time).format('HH:mm')}
+
+mixin fomatDate(time)
+    p #{moment(time).format('DD/MM/YYYY')}

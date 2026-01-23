@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const flash = require("express-flash");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
+const moment = require("moment");
 var path = require("path");
 
 require("dotenv").config();
@@ -58,6 +59,7 @@ app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
 app.use(express.static(`${__dirname}/public`));
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
+app.locals.moment = moment;
 route(app);
 routeAdmin(app);
 app.listen(port, () => {

@@ -20,11 +20,21 @@ const productSchema = new mongoose.Schema(
       slug: "title", // sinh ra chuỗi url khi load trang web trên đường link sẽ hiển thị cái này
       unique: true, // Tránh bị trùng url (bật )
     },
+    createdBy: {
+      account_id: String,
+      createdAt: {
+        type: Date,
+        default: Date.now,
+      },
+    },
     deleted: {
       type: Boolean,
       default: false,
     },
-    deletedAt: Date,
+    deletedAt: {
+      account_id: String,
+      deletedAt: Date,
+    },
   },
   {
     timestamps: true, // Tự thêm thời gian tạo và update

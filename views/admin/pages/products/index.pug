@@ -5,6 +5,7 @@ include ../../mixins/pagination.pug
 include ../../mixins/form-change-multi.pug
 include ../../mixins/alert.pug
 include ../../mixins/sort.pug
+include ../../mixins/moment.pug
 
 block main
     +alertSuccess(5000)
@@ -48,6 +49,7 @@ block main
                         th Giá
                         th Vị trí
                         th Trạng thái
+                        th Người tạo
                         th Hành động
 
                 tbody
@@ -94,6 +96,10 @@ block main
                                         data-id=item.id
                                         button-change-status
                                     ) Dừng hoạt động   
+                            td 
+                                p #{item.accountFullName}
+                                +fomatDateTime(item.createdBy.createAT)
+
                             td
                                 a(  
                                     href=`${prefixAdmin}/products/detail/${item._id}`
