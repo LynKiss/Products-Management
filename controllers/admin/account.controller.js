@@ -66,6 +66,7 @@ module.exports.edit = async (req, res) => {
 };
 // [PATCH] /admin/accounts/edit/:id
 module.exports.editPatch = async (req, res) => {
+  const id = req.params.id;
   const emailExits = await Account.findOne({
     _id: { $ne: id }, // tìm không bằng id này ( loại bỏ trường hợp)
     deleted: false,
@@ -81,7 +82,6 @@ module.exports.editPatch = async (req, res) => {
       delete req.body.password;
     }
     try {
-      const id = req.params.id;
       await Account.updateOne({ _id: id }, req.body);
       req.flash("success", `Cập nhật thành công !`);
     } catch (error) {

@@ -26,31 +26,33 @@ mixin table-tree(items, level = 1)
                     name="position"
                     )
             td
-                if(item.status == "active")
-                    a(
-                        class="badge badge-success"
-                        href="javascript:;" 
-                        data-status=item.status 
-                        data-id=item.id
-                        button-change-status
-                    ) Hoạt động
-                else
-                    a(
-                        class="badge badge-danger"
-                        href="javascript:;" 
-                        data-status=item.status
-                        data-id=item.id
-                        button-change-status
-                    ) Dừng hoạt động   
+                if(role && role.permissions && role.permissions.includes("products-category_edit"))
+                    if(item.status == "active")
+                        a(
+                            class="badge badge-success"
+                            href="javascript:;" 
+                            data-status=item.status 
+                            data-id=item.id
+                            button-change-status
+                        ) Hoạt động
+                    else
+                        a(
+                            class="badge badge-danger"
+                            href="javascript:;" 
+                            data-status=item.status
+                            data-id=item.id
+                            button-change-status
+                        ) Dừng hoạt động   
             td
                 a(  
                     href=`${prefixAdmin}/products-category/detail/${item.id}`
                     class="btn btn-secondary btn-sm  " 
                 ) Chi tiết
-                a(  
-                    href=`${prefixAdmin}/products-category/edit/${item.id}`
-                    class="btn btn-warning btn-sm" 
-                ) Sửa
+                if(role && role.permissions && role.permissions.includes("products-category_edit"))
+                    a(  
+                        href=`${prefixAdmin}/products-category/edit/${item.id}`
+                        class="btn btn-warning btn-sm" 
+                    ) Sửa
                 button(
                     class="btn btn-danger btn-sm ml-1"
                     data-id=item.id
