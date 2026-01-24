@@ -30,6 +30,11 @@ module.exports.create = async (req, res) => {
 };
 // [POST] /admin/products-category/create
 module.exports.createPost = async (req, res) => {
+  // const permissions = res.locals.role.permissions;
+  // if (permissions.include("products-category_create")) {
+  // } else {
+  //   return;
+  // }  // Kiểm tra xem có quyền sử dụng chức năng tránh dùng posman gắn token vào
   if (!req.body.position || req.body.position == "") {
     const countProductCategory = await ProductCategory.countDocuments();
     req.body.position = countProductCategory + 1;
