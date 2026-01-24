@@ -50,6 +50,7 @@ block main
                         th Vị trí
                         th Trạng thái
                         th Người tạo
+                        th Người cập nhật
                         th Hành động
 
                 tbody
@@ -98,7 +99,12 @@ block main
                                     ) Dừng hoạt động   
                             td 
                                 p #{item.accountFullName}
-                                +fomatDateTime(item.createdBy.createAT)
+                                +fomatDateTime(item.createdBy.createdAt)
+                            td 
+                                - const updatedBy = item.updatedBy && item.updatedBy.slice(-1)[0];
+                                if(updatedBy)
+                                    p #{updatedBy.accountFullName}
+                                    +fomatDateTime(updatedBy.updatedAt)
 
                             td
                                 a(  

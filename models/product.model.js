@@ -31,10 +31,17 @@ const productSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    deletedAt: {
+    deletedBy: {
       account_id: String,
       deletedAt: Date,
     },
+    updatedBy: [
+      // lưu kiểng mảng cho nhiều lần chỉnh sửa
+      {
+        account_id: String,
+        updatedAt: Date,
+      },
+    ],
   },
   {
     timestamps: true, // Tự thêm thời gian tạo và update
