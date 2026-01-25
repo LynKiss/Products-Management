@@ -1,5 +1,7 @@
 const productsHelper = require("../../helpers/products");
+const productCategoryHelper = require("../../helpers/product-category");
 const Product = require("../../models/product.model");
+const ProductCategory = require("../../models/product-category");
 // [GET] /products
 module.exports.index = async (req, res) => {
   const product = await Product.find({
@@ -14,7 +16,7 @@ module.exports.index = async (req, res) => {
   });
 };
 
-// [GET] /products/detail/:slug
+// [GET] /products/:slug
 module.exports.detail = async (req, res) => {
   try {
     const find = {
@@ -23,7 +25,7 @@ module.exports.detail = async (req, res) => {
       status: "active",
     };
     const product = await Product.findOne(find); // find thì là trả về nhiều bản ghi findOne là 1
-    console.log(product);
+
     res.render("client/pages/products/detail", {
       pageTitle: product.title,
       product: product,
@@ -31,5 +33,39 @@ module.exports.detail = async (req, res) => {
   } catch (error) {
     res.redirect(`/products`);
     req.flash("error", `Không tồn tại sản phẩm này !`);
+  }
+};
+// [GET] /products/:slugCategory
+module.exports.category = async (req, res) => {
+  try {
+    const category = await ProductCategory.findOne({
+      slug: req.params.slugCategory,
+      status: "active",
+      deleted: false,
+    });
+
+    if (!category) {
+      return res.redirect("/products");
+    }
+
+    const listSubCategory = await productCategoryHelper.getSubCategory(
+      category.id,
+    );
+    const listSubCategoryId = listSubCategory.map((item) => item.id);
+    const products = await Product.find({
+      product_category_id: { $in: [category.id, ...listSubCategoryId] },
+      deleted: false,
+      status: "active",
+    }).sort({ position: "desc" });
+
+    const newProducts = productsHelper.priceNewProducts(products);
+
+    res.render("client/pages/products/index", {
+      pageTitle: category.title,
+      products: newProducts,
+    });
+  } catch (error) {
+    console.error("Error in productsCategory:", error);
+    res.redirect("/products");
   }
 };

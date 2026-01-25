@@ -1,7 +1,7 @@
-mixin sub-menu(items, path)
-  ul
+mixin sub-menu(items, path, level = 0)
+  ul(class=`submenu-list level-${level}`)
     each item in items
       li(class=item.children && item.children.length > 0 ? 'has-submenu' : '')
-        a(href=`${path}/${item.slug}`) #{item.title}
+        a(href=`${path}/${item.slug}` class='submenu-link') #{item.title}
         if item.children && item.children.length > 0
-          +sub-menu(item.children, path)
+          +sub-menu(item.children, path, level + 1)
