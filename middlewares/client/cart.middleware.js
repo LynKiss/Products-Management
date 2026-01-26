@@ -10,6 +10,14 @@ module.exports.cartId = async (req, res, next) => {
       // lưu ip của sản phẩm dùng js để xử lý tránh spam ( tạo thêm model thêm vào db , mỗi lần web load web lại kiểm tra ip đó)
     });
   } else {
+    const cart = await Cart.findOne({
+      _id: req.cookies.cartId,
+    });
+    cart.totalQuantity = cart.products.reduce(
+      (sum, item) => sum + item.quantity,
+      0,
+    );
+    res.locals.miniCart = cart;
   }
   next();
 };
