@@ -60,6 +60,7 @@ app.set("view engine", "pug");
 app.use(express.static(`${__dirname}/public`));
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 app.locals.moment = moment;
+
 route(app);
 routeAdmin(app);
 app.listen(port, () => {

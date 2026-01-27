@@ -8,7 +8,7 @@ module.exports = (app) => {
   app.use(categoryMiddleWare.category); // dùng cho toàn bộ trang web
   app.use(cartMiddleWare.cartId);
   app.use("/", homeRoutes);
+  app.use("/cart", cartRoutes);
   app.use("/search", searchRoutes);
   app.use("/products", productRoutes);
-  app.use("/cart", cartRoutes);
 };
