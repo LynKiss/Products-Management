@@ -27,6 +27,6 @@ const oderSchema = new mongoose.Schema(
   },
 );
 
-const Oder = mongoose.model("Oder", cartSchema, "oders");
+const Oder = mongoose.model("Oder", oderSchema, "oders");
 
 module.exports = Oder;
