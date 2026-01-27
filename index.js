@@ -12,48 +12,22 @@ const route = require("./routes/client/index.route");
 const routeAdmin = require("./routes/admin/index.route");
 const database = require("./config/database");
 const systemConfig = require("./config/system");
+
+// Helpers
+const redirectBack = require("./helpers/redirect-back");
+const sessionHelper = require("./helpers/session");
+const tinymceHelper = require("./helpers/tinymce");
+
 database.connect();
 app = express();
 
+// Middleware helpers
+app.use(redirectBack);
+sessionHelper(app);
+tinymceHelper(app);
+
 app.use(methodOverride("_method"));
 app.use(bodyParser.urlencoded());
-
-//flast
-app.use(cookieParser("Lyn_Toast"));
-app.use(
-  session({
-    secret: "Lyn_Toast",
-    resave: true,
-    saveUninitialized: true,
-    cookie: { maxAge: 5 * 60 * 1000 },
-  }),
-);
-app.use((req, res, next) => {
-  if (!req.session.flash) {
-    req.session.flash = {};
-  }
-  const currentFlash = req.session.flash;
-  const flashMessage = (type, message) => {
-    req.session.flash[type] = req.session.flash[type] || [];
-    req.session.flash[type].push(message);
-  };
-
-  req.flash = flashMessage;
-  res.locals.flash = flashMessage;
-  res.locals.messages = {
-    success: currentFlash.success || [],
-    error: currentFlash.error || [],
-  };
-  req.session.flash = {};
-  next();
-});
-//End flast
-//TinyMCE
-app.use(
-  "/tinymce",
-  express.static(path.join(__dirname, "node_modules", "tinymce")),
-);
-//End TinyMCE
 const port = process.env.PORT;
 app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");

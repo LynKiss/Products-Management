@@ -3,8 +3,8 @@ include ../../mixins/box-head.pug
 include ../../mixins/alert.pug
 
 block main
-  +alertSuccess(5000)
-  +alertError(5000)
+  +alertSuccess(2000)
+  +alertError(2000)
 
   .container.my-3
     .row
@@ -13,6 +13,7 @@ block main
 
     .row
       .col-12
+      if(cartDetail.products.length > 0)
         table(class="table table-bordered")
           thead
             tr
@@ -24,7 +25,7 @@ block main
               th Tổng tiền
               th Hành động
           tbody
-            if(cartDetail.products.length > 0)
+            
               each item,index in cartDetail.products
                 tr
                   td #{index + 1}
@@ -45,12 +46,11 @@ block main
                   td #{item.totalPrice} $
                   td
                     a(
-                      href=`/cart/delete/${item.productInfo.slug}`
+                      href=`cart/delete/${item.product_id}`
                       class="btn btn-danger"
                     ) Xóa
-            else 
-              | Không có sản phẩm nào trong giỏ hàng
         h3(class="text-right") Tổng đơn hàng: #{cartDetail.totalPrice}$
-
-        div(class="text-right mt-3")
-          a(href="/checkout" class="btn btn-success") THANH TOÁN
+          div(class="text-right mt-3")
+            a(href="/checkout" class="btn btn-success") THANH TOÁN
+      else 
+        h1(class="text-center") Không có sản phẩm nào trong giỏ hàng

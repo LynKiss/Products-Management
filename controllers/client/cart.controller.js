@@ -26,7 +26,7 @@ module.exports.index = async (req, res) => {
   });
 };
 
-// [POST] /cart/:productId
+// [POST] /cart/add/:productId
 module.exports.addCart = async (req, res) => {
   const productId = req.params.productId;
   const quantity = parseInt(req.body.quantity);
@@ -63,4 +63,19 @@ module.exports.addCart = async (req, res) => {
 
   req.flash("success", `Thêm vào giỏ hàng thành công !`);
   res.redirect(`/products`);
+};
+// [POST] /cart/delete/:productId
+module.exports.delete = async (req, res) => {
+  const productId = req.params.productId;
+  const cartId = req.cookies.cartId;
+  await Cart.updateOne(
+    {
+      _id: cartId,
+    },
+    {
+      $pull: { products: { product_id: productId } },
+    },
+  );
+  req.flash("success", `Xóa thành công !`);
+  res.redirect(`back`);
 };
