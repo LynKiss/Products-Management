@@ -47,12 +47,12 @@ module.exports.oder = async (req, res) => {
     objProducts.price = productInfo.price;
     objProducts.discountPercentage = productInfo.discountPercentage;
     products.push(objProducts);
-    const oderInfo = {
-      cart_id: cartId,
-      userInfo: userInfo,
-      products: products,
-    };
   }
+  const oderInfo = {
+    cart_id: cartId,
+    userInfo: userInfo,
+    products: products,
+  };
   const oder = new Oder(oderInfo);
   await oder.save();
   await Cart.updateOne(
@@ -63,12 +63,30 @@ module.exports.oder = async (req, res) => {
       products: [],
     },
   );
-  res.redirect(`checkout/success/${oder.id}`);
+  res.redirect(`success/${oder.id}`);
 };
 
 // [GET] /checkout/success/:oderId
 module.exports.success = async (req, res) => {
+  const order = await Oder.findOne({
+    _id: req.params.oderId,
+  });
+
+  for (const product of order.products) {
+    const productInfo = await Product.findOne({
+      _id: product.product_id,
+    }).select("title thumbnail");
+    product.productInfo = productInfo;
+
+    product.priceNew = productsHelper.priceNewProduct(product);
+    product.totalPrice = product.priceNew * product.quantity;
+  }
+  order.totalPrice = order.products.reduce(
+    (sum, item) => sum + item.totalPrice,
+    0,
+  );
   res.render("client/pages/checkout/success", {
     pageTitle: "Đặt hàng thành công ",
+    order: order,
   });
 };
