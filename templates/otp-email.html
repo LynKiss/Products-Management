@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>OTP Reset Password</title>
+  </head>
+  <body
+    style="
+      margin: 0;
+      padding: 0;
+      background-color: #f4f6f8;
+      font-family: Arial, Helvetica, sans-serif;
+    "
+  >
+    <div style="padding: 30px">
+      <div
+        style="
+          max-width: 500px;
+          margin: auto;
+          background: #ffffff;
+          border-radius: 8px;
+          padding: 30px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        "
+      >
+        <h2 style="text-align: center; color: #333">
+          🔐 Xác minh lấy lại mật khẩu
+        </h2>
+
+        <p style="color: #555; font-size: 15px">
+          Bạn vừa yêu cầu lấy lại mật khẩu cho tài khoản của mình.
+        </p>
+
+        <p style="color: #555; font-size: 15px">Mã OTP của bạn là:</p>
+
+        <div style="text-align: center; margin: 25px 0">
+          <span
+            style="
+              display: inline-block;
+              font-size: 28px;
+              letter-spacing: 6px;
+              font-weight: bold;
+              color: #ffffff;
+              background: #0d6efd;
+              padding: 12px 24px;
+              border-radius: 6px;
+            "
+          >
+            {{OTP}}
+          </span>
+        </div>
+
+        <p style="font-size: 14px; color: #555">
+          ⏰ Mã OTP có hiệu lực trong <b>3 phút</b>.
+        </p>
+
+        <p
+          style="
+            font-size: 13px;
+            color: #999;
+            border-top: 1px solid #eee;
+            margin-top: 30px;
+            padding-top: 15px;
+          "
+        >
+          Nếu bạn không yêu cầu lấy lại mật khẩu, vui lòng bỏ qua email này.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -29,3 +29,30 @@ module.exports.loginPost = (req, res, next) => {
   }
   next();
 };
+module.exports.forgotPassword = (req, res, next) => {
+  if (!req.body.email) {
+    req.flash("error", `Vui lòng nhập email !`);
+    res.redirect(req.get("Referrer") || "/");
+    return;
+  }
+
+  next();
+};
+module.exports.forgotPasswordPost = (req, res, next) => {
+  if (!req.body.password) {
+    req.flash("error", `Vui lòng nhập password !`);
+    res.redirect(req.get("Referrer") || "/");
+    return;
+  }
+  if (!req.body.confirmPassword) {
+    req.flash("error", `Vui lòng nhập xác nhận password !`);
+    res.redirect(req.get("Referrer") || "/");
+    return;
+  }
+  if (req.body.password != req.body.confirmPassword) {
+    req.flash("error", `Mật khẩu không khớp !`);
+    res.redirect(req.get("Referrer") || "/");
+    return;
+  }
+  next();
+};
