@@ -142,3 +142,9 @@ module.exports.otpPasswordResetPost = async (req, res) => {
   );
   res.redirect("/");
 };
+// [GET] /user/info
+module.exports.info = async (req, res) => {
+  res.render("client/pages/user/info.pug", {
+    pageTitle: "Đăng nhập tài khoản",
+  });
+};
