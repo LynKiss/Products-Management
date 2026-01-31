@@ -1,4 +1,5 @@
 const User = require("../../models/user.model");
+const Cart = require("../../models/cart-model");
 const ForgotPassword = require("../../models/forgot-password");
 const generateHepler = require("../../helpers/generate");
 const sendMailHepler = require("../../helpers/sendMail");
@@ -54,6 +55,7 @@ module.exports.loginPost = async (req, res) => {
     req.flash("error", `Tài khoản đang bị khỏa !`);
     res.redirect("/");
   }
+  await Cart.updateOne({ _id: req.cookies.cartId }, { user_id: user.id });
   res.cookie("tokenUser", user.tokenUser);
   res.redirect("/");
 };

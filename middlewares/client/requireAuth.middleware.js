@@ -1,21 +1,16 @@
-const { prefixAdmin } = require("../../config/system");
-const Account = require("../../models/account.model");
-const Role = require("../../models/role.model");
+const User = require("../../models/user.model");
+
 module.exports.requireAuth = async (req, res, next) => {
-  if (!req.cookies.token) {
-    res.redirect(`${prefixAdmin}/auth/login`);
+  if (!req.cookies.tokenUser) {
+    res.redirect(`/user/login`);
   } else {
-    const user = await Account.findOne({ token: req.cookies.token }).select(
-      "-password",
-    );
+    const user = await User.findOne({
+      tokenUser: req.cookies.tokenUser,
+    }).select("-password");
     if (!user) {
-      return res.redirect(`${prefixAdmin}/auth/login`);
+      return res.redirect(`/user/login`);
     } else {
       res.locals.user = user;
-      role = await Role.findOne({ _id: user.role_id }).select(
-        "title permissions",
-      );
-      res.locals.role = role;
       next();
     }
   }
