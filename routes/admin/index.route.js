@@ -10,7 +10,7 @@ const myAcountRoutes = require("./my-account.route");
 const settingRoutes = require("./setting.route");
 module.exports = (app) => {
   const PATH_ADMIN = systemConfig.prefixAdmin;
-  app.use(PATH_ADMIN + "/roles", roleRoutes);
+  app.use(PATH_ADMIN + "/roles", authMiddleware.requireAuth, roleRoutes);
   app.use(
     PATH_ADMIN + "/dashboard",
     authMiddleware.requireAuth,
