@@ -7,16 +7,6 @@ const session = require("express-session");
 const moment = require("moment");
 var path = require("path");
 
-// SocketIO
-const http = require("http");
-const server = http.createServer(app);
-const { Server } = require("socket.io");
-const io = new Server(server);
-io.on("connection", (socket) => {
-  console.log("a user connected");
-});
-// End SocketIO
-
 require("dotenv").config();
 const route = require("./routes/client/index.route");
 const routeAdmin = require("./routes/admin/index.route");
@@ -30,7 +20,13 @@ const tinymceHelper = require("./helpers/tinymce");
 
 database.connect();
 app = express();
-
+// SocketIO
+const http = require("http");
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+global._io = io; // gắn cho toàn bộ server sử dụng được biến này
+// End SocketIO
 // Middleware helpers
 app.use(redirectBack);
 sessionHelper(app);
