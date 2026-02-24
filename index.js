@@ -7,6 +7,16 @@ const session = require("express-session");
 const moment = require("moment");
 var path = require("path");
 
+// SocketIO
+const http = require("http");
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+io.on("connection", (socket) => {
+  console.log("a user connected");
+});
+// End SocketIO
+
 require("dotenv").config();
 const route = require("./routes/client/index.route");
 const routeAdmin = require("./routes/admin/index.route");
@@ -42,6 +52,6 @@ app.get(/.*/, (req, res) => {
     pageTitle: "404 Not Found",
   });
 });
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`App listening on port ${port}`);
 });
