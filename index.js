@@ -35,8 +35,13 @@ app.use(express.static(`${__dirname}/public`));
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 app.locals.moment = moment;
 
-route(app);
-routeAdmin(app);
+route(app); // route user
+routeAdmin(app); // route admin
+app.get(/.*/, (req, res) => {
+  res.render("client/pages/errors/404.pug", {
+    pageTitle: "404 Not Found",
+  });
+});
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
 });
