@@ -3,6 +3,7 @@ const User = require("../../models/user.model");
 // [GET] /chat
 module.exports.index = async (req, res) => {
   const userId = res.locals.user.id;
+  const fullName = res.locals.user.fullName;
   console.log("id :", userId);
   _io.once("connection", (socket) => {
     socket.on("CLIENT_SEND_MESSAGE", async (content) => {
@@ -13,26 +14,36 @@ module.exports.index = async (req, res) => {
 
       await chat.save();
       //Trả về client
-      _io.emit("SERVER_RETURN_MESSAGE",{
-        userId : userId,
-        fullName:fullName,
-        content : content
+      _io.emit("SERVER_RETURN_MESSAGE", {
+        userId: userId,
+        fullName: fullName,
+        content: content
       })
     });
+    // Typing
+    socket.on("CLIENT_SEND_TYPING", async (type) => {
+      socket.broadcast.emit("SERVER_SEND_TYPING", {
+        userId: userId,
+        fullName: fullName,
+        type : type
+      })
+
+    });
+    // End Typing
   });
   // Lấy data trong db 
   const chats = await Chat.find({
-    deleted:false
+    deleted: false
   })
- for (const chat of chats) {
-  const infoUser = await User.findOne({
-    _id : chat.user_id
-  }).select("fullName")
-  chat.infoUser = infoUser
- }
+  for (const chat of chats) {
+    const infoUser = await User.findOne({
+      _id: chat.user_id
+    }).select("fullName")
+    chat.infoUser = infoUser
+  }
   //  End
   res.render("client/pages/chat/index", {
     pageTitle: "Chat",
-    chats : chats
+    chats: chats
   });
 };
