@@ -12,6 +12,12 @@ module.exports.index = async (req, res) => {
       });
 
       await chat.save();
+      //Trả về client
+      _io.emit("SERVER_RETURN_MESSAGE",{
+        userId : userId,
+        fullName:fullName,
+        content : content
+      })
     });
   });
   // Lấy data trong db 

@@ -9,7 +9,7 @@ block main
 
     .row
       .col-12
-        .chat
+        .chat(my-id=user.id)
 
           .inner-body
             each chat in chats  
@@ -19,24 +19,7 @@ block main
                 .inner-content
                   | #{chat.content}
 
-            //- .inner-outgoing
-            //-   .inner-content
-            //-     | Thế à? Ok e iu
-
-            //- .inner-incoming
-            //-   .inner-name Em Yêu
-            //-   .inner-content
-            //-     | Nhanh nha nhanh nha
-
-            //- .inner-outgoing
-            //-   .inner-content
-            //-     | Ok đến nơi mà thấy ai ở nhà đâu e? khóa cửa mà :(
-
-            //- .inner-incoming
-            //-   .inner-name Em Yêu
-            //-   .inner-content
-            //-     | Thì em bảo nhà e không ai ở nhà mà :)
-
+           
           .inner-foot
             form.inner-form(action="" method="POST")
               input(
