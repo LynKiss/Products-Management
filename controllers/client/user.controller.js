@@ -36,24 +36,38 @@ module.exports.registerPost = async (req, res) => {
 };
 // [POST] /user/login
 module.exports.loginPost = async (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
+  const emailInput = req.body.email || '';
+  const passwordInput = req.body.password || '';
+  
+  if (!emailInput.trim() || !passwordInput.trim()) {
+    req.flash("error", `Vui lòng nhập đầy đủ email và mật khẩu !`);
+    res.redirect("/");
+    return;
+  }
+  
+  const email = emailInput.trim().toLowerCase();
+  const password = passwordInput.trim();
 
   const user = await User.findOne({
     email: email,
     deleted: false,
   });
-  if (!user) {
+  
+  if (user === null) {
     req.flash("error", `Email không tồn tại !`);
     res.redirect("/");
+    return;
   }
-  if (md5(password) != user.password) {
+  
+  if (md5(password) !== user.password) {
     req.flash("error", `Mật khẩu không chính xác!`);
     res.redirect("/");
+    return;
   }
-  if (user.status == "inactive") {
-    req.flash("error", `Tài khoản đang bị khỏa !`);
+  if (user.status === "inactive") {
+    req.flash("error", `Tài khoản đang bị khóa !`);
     res.redirect("/");
+    return;
   }
   const cart = await Cart.findOne({ user_id: user.id });
   if (cart) {

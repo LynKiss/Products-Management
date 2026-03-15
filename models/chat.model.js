@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 const chatSchema = new mongoose.Schema(
   {
     user_id: String,
-    room_chat_id: String,
-    images: Array,
+    // room_chat_id: String,
+    // images: Array,
     content: String,
     deleted: {
       type: Boolean,
