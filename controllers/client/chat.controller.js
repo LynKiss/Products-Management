@@ -4,7 +4,7 @@ const User = require("../../models/user.model");
 module.exports.index = async (req, res) => {
   const userId = res.locals.user.id;
   const fullName = res.locals.user.fullName;
-  console.log("id :", userId);
+
   _io.once("connection", (socket) => {
     socket.on("CLIENT_SEND_MESSAGE", async (content) => {
       const chat = new Chat({
@@ -25,7 +25,7 @@ module.exports.index = async (req, res) => {
       socket.broadcast.emit("SERVER_SEND_TYPING", {
         userId: userId,
         fullName: fullName,
-        type : type
+        type: type
       })
 
     });
