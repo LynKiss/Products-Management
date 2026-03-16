@@ -258,10 +258,10 @@
 }
 
 .product-item .inner-content .inner-title a {
-  color             : #2c3e50;
-  text-decoration   : none;
-  transition        : color 0.3s ease;
-  display           : -webkit-box;
+  color          : #2c3e50;
+  text-decoration: none;
+  transition     : color 0.3s ease;
+  display        : -webkit-box;
 
   -webkit-box-orient: vertical;
   overflow          : hidden;
@@ -490,28 +490,35 @@
 
 /* Chat */
 .chat {
-  border       : 1px solid #ddd;
-  border-radius: 12px;
-  overflow     : hidden;
-  background   : #fff;
-  box-shadow   : 0 4px 20px rgba(0, 0, 0, 0.08);
+  position     : relative;
+  border       : 1px solid #dbe2eb;
+  border-radius: 16px;
+  background   : #f8fafc;
+  box-shadow   : 0 14px 30px rgba(0, 0, 0, 0.1);
 }
 
 .chat .inner-body {
-  height        : 400px;
+  min-height    : 420px;
+  max-height    : 520px;
   overflow-y    : auto;
-  padding       : 20px;
-  background    : #f8f9fa;
+  padding       : 16px;
+  background    : #f1f5f9;
   display       : flex;
   flex-direction: column;
-  gap           : 15px;
+  gap           : 10px;
 }
 
 .chat .inner-incoming,
 .chat .inner-outgoing {
-  max-width     : 70%;
+  width         : fit-content;
+  max-width     : 78%;
   display       : flex;
   flex-direction: column;
+  gap           : 4px;
+}
+
+.chat .inner-foot {
+  position: relative;
 }
 
 .chat .inner-incoming {
@@ -523,83 +530,159 @@
 }
 
 .chat .inner-name {
-  font-size    : 12px;
-  font-weight  : 600;
-  color        : #4caf50;
-  margin-bottom: 5px;
-  margin-left  : 10px;
+  font-size  : 11px;
+  color      : #6b7280;
+  margin-left: 8px;
 }
 
 .chat .inner-content {
-  padding      : 12px 16px;
-  border-radius: 18px;
+  padding      : 10px 14px;
+  border-radius: 14px;
   font-size    : 14px;
-  line-height  : 1.5;
-  word-wrap    : break-word;
+  line-height  : 1.4;
+  word-break   : break-word;
+  box-shadow   : 0 1px 5px rgba(0, 0, 0, 0.06);
 }
 
 .chat .inner-incoming .inner-content {
   background               : #fff;
-  border                   : 1px solid #e0e0e0;
-  color                    : #333;
+  border                   : 1px solid #e2e8f0;
   border-bottom-left-radius: 4px;
 }
 
 .chat .inner-outgoing .inner-content {
-  background                : #4caf50;
+  background                : #2563eb;
   color                     : #fff;
   border-bottom-right-radius: 4px;
 }
 
+.chat .inner-images {
+  margin-top: 4px;
+  display   : flex;
+  flex-wrap : wrap;
+  gap       : 6px;
+}
+
+.chat .inner-images img {
+  width        : 86px;
+  height       : 86px;
+  object-fit   : cover;
+  border-radius: 10px;
+  border       : 1px solid #d1d5db;
+}
+
 .chat .inner-foot {
-  padding   : 15px;
+  padding   : 10px 12px;
   background: #fff;
-  border-top: 1px solid #eee;
+  border-top: 1px solid #e2e8f0;
 }
 
 .chat .inner-form {
-  display: flex;
-  gap    : 10px;
+  display    : flex;
+  align-items: center;
+  gap        : 8px;
+  flex-wrap  : wrap;
 }
 
 .chat .inner-form input {
-  flex         : 1;
-  padding      : 12px 16px;
-  border       : 1px solid #ddd;
-  border-radius: 25px;
-  font-size    : 14px;
-  outline      : none;
-  transition   : border-color 0.3s ease;
+  flex         : 1 1 220px;
+  min-width    : 150px;
+  padding      : 10px 14px;
+  border       : 1px solid #cbd5e1;
+  border-radius: 999px;
+  background   : #fff;
+  transition   : border-color .2s ease;
 }
 
 .chat .inner-form input:focus {
-  border-color: #4caf50;
+  border-color: #2563eb;
+  box-shadow  : 0 0 0 2px rgba(37, 99, 235, 0.12);
+}
+
+.custom-file-container {
+  border-radius: 999px;
+  border       : 1px solid #cbd5e1;
+  background   : #fff;
+  padding      : 5px 10px;
+  display      : inline-flex;
+  align-items  : center;
+  gap          : 4px;
+  height       : 36px;
+  cursor       : pointer;
+}
+
+.custom-file-container:hover {
+  border-color: #2563eb;
+}
+
+.custom-file-container input[type='file'] {
+  display: none;
+}
+
+.custom-file-container__custom-file-control::before {
+  content  : 'Chọn ảnh';
+  font-size: 13px;
+  color    : #1f2937;
 }
 
 .chat .inner-form button {
-  width          : 45px;
-  height         : 45px;
+  width          : 42px;
+  height         : 42px;
   border         : none;
   border-radius  : 50%;
-  background     : #4caf50;
+  background     : #2563eb;
   color          : #fff;
-  cursor         : pointer;
   display        : flex;
   align-items    : center;
   justify-content: center;
-  transition     :
-    background 0.3s ease,
-    transform 0.2s ease;
+  cursor         : pointer;
+  transition     : all .2s ease;
 }
 
 .chat .inner-form button:hover {
-  background: #43a047;
   transform : scale(1.05);
+  background: #1e40af;
 }
 
 .chat .inner-form button i {
   font-size: 16px;
 }
+
+.custom-file-container {
+  display      : flex;
+  align-items  : center;
+  gap          : 8px;
+  border       : 1px solid #e0e0e0;
+  border-radius: 999px;
+  padding      : 4px 10px;
+  background   : #fff;
+  font-size    : 14px;
+  color        : #333;
+  cursor       : pointer;
+  max-width    : 160px;
+  min-height   : 36px;
+  transition   : border-color .2s ease, box-shadow .2s ease;
+}
+
+.custom-file-container:hover {
+  border-color: #4caf50;
+  box-shadow  : 0 0 0 3px rgba(76, 175, 80, .1);
+}
+
+.custom-file-container input[type="file"] {
+  display: none;
+}
+
+.custom-file-container .file-text {
+  font-size  : 13px;
+  color      : #555;
+  margin-left: 4px;
+}
+
+.custom-file-container__image-preview {
+  display: none;
+}
+
 
 /* Responsive Chat */
 @media (max-width: 576px) {
@@ -621,10 +704,10 @@
 
 /* Typing Indicators */
 .box-typing {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 20px;
+  display      : flex;
+  align-items  : center;
+  gap          : 10px;
+  padding      : 10px 20px;
   margin-bottom: 5px;
 }
 
@@ -633,23 +716,23 @@
 }
 
 .inner-name {
-  font-size: 12px;
-  font-weight: 600;
-  color: #666;
+  font-size    : 12px;
+  font-weight  : 600;
+  color        : #666;
   margin-bottom: 2px;
 }
 
 .inner-dots {
   display: flex;
-  gap: 4px;
+  gap    : 4px;
 }
 
 .inner-dots span {
-  width: 8px;
-  height: 8px;
+  width        : 8px;
+  height       : 8px;
   border-radius: 50%;
-  background: #999;
-  animation: typing 1.4s infinite ease-in-out;
+  background   : #999;
+  animation    : typing 1.4s infinite ease-in-out;
 }
 
 .inner-dots span:nth-child(2) {
@@ -661,35 +744,58 @@
 }
 
 @keyframes typing {
-  0%, 60%, 100% {
+
+  0%,
+  60%,
+  100% {
     transform: translateY(0);
-    opacity: 0.4;
+    opacity  : 0.4;
   }
+
   30% {
     transform: translateY(-10px);
-    opacity: 1;
+    opacity  : 1;
   }
 }
 
 /* End Typing Indicators */
 
+.chat .inner-body .inner-images img {
+  width        : 80px;
+  height       : 80px;
+  object-fit   : contain;
+  background   : #efefef;
+  padding      : 10px;
+  margin       : 0 5px 5px 0;
+  border-radius: 5px;
+}
+
+.chat .inner-body .inner-outgoing .inner-images {
+  margin-left: auto;
+  text-align : right;
+}
+
+.chat .inner-body .inner-outgoing .inner-images img {
+  margin: 0 0 5px 5px;
+}
+
 /* End Chat */
 
 /* Emoji Picker Tooltip */
 .tooltip {
-  position   : absolute;
-  top        : 100%;
-  right      : 0;
-  z-index    : 1000;
-  background : #fff;
-  border     : 1px solid #ddd;
+  position     : absolute;
+  bottom       : 48px;
+  right        : 0;
+  z-index      : 1000;
+  background   : #fff;
+  border       : 1px solid #ddd;
   border-radius: 12px;
-  box-shadow : 0 8px 32px rgba(0,0,0,0.12);
-  padding    : 8px;
-  visibility : hidden;
-  opacity    : 0;
-  transform  : translateY(-10px);
-  transition : all 0.3s ease;
+  box-shadow   : 0 8px 32px rgba(0, 0, 0, 0.12);
+  padding      : 8px;
+  visibility   : hidden;
+  opacity      : 0;
+  transform    : translateY(10px);
+  transition   : all 0.2s ease;
 }
 
 .tooltip.shown {
