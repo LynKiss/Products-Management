@@ -9,6 +9,7 @@ html
     link(rel="stylesheet", href="https://unpkg.com/file-upload-with-preview/dist/style.css")
     link(rel="stylesheet", href="/css/submenu.css")
     link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/file-upload-with-preview@4.1.0/dist/file-upload-with-preview.min.css")
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.7/viewer.css")
   body
     +alertSuccess(2000)
     include ../partials/header.pug
@@ -28,3 +29,6 @@ html
     script(src="/js/socket.js")
     script(type="module" src="/js/chat.js")
     script(src="/js/script.js") 
+
+    //- Viewerjs
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.7/viewer.js") 

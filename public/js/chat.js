@@ -202,6 +202,10 @@ socket.on("SERVER_RETURN_MESSAGE", (data) => {
   const body = document.querySelector(".chat .inner-body")
   // Chèn tin nhắn mới vào cuối danh sách.
   body.insertAdjacentHTML("beforeend", renderMessage(data, myId));
+  // Nếu đã khởi tạo Viewer thì cập nhật để nhận diện luôn ảnh mới thêm.
+  if (gallery) {
+    gallery.update();
+  }
   // Cuộn xuống cuối sau khi có tin nhắn mới.
   scrollChatToBottom();
 });
@@ -322,7 +326,7 @@ if (elementListTyping) {
         bodyChat.scrollTop = bodyChat.scrollHeight
 
       }
-    // Nếu server báo "hide" thì xóa box typing của user đó.
+      // Nếu server báo "hide" thì xóa box typing của user đó.
     } else if (data.type === "hide") {
       const existing = elementListTyping.querySelector(`[user-id="${data.userId}"]`);
       if (existing) existing.remove();
@@ -330,3 +334,12 @@ if (elementListTyping) {
   });
 }
 // eND SERVER RETURN TYPING
+
+// PREVIEWER FULL IMAGE
+// Khởi tạo Viewer một lần cho toàn bộ vùng chat để click ảnh xem lớn.
+const bodychatPreviewImage = document.querySelector(".chat .inner-body");
+let gallery;
+if (bodychatPreviewImage) {
+  gallery = new Viewer(bodychatPreviewImage);
+}
+// END PREVIEWER FULL IMAGE
