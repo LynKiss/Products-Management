@@ -23,7 +23,7 @@ let streamUpload = (buffer) => {
 module.exports = async function upload(buffer) {
   try {
     let result = await streamUpload(buffer);
-    return result;
+    return result.secure_url;
   } catch (error) {
     console.error("Upload error:", error);
     throw error;

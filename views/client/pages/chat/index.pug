@@ -22,22 +22,35 @@ block main
                 if(chat.images)
                   .inner-images
                     each image in chat.images
-                      img(src)
+                      - const imageSrc = image?.secure_url || image?.url || image
+                      if imageSrc
+                        img(src=imageSrc alt="chat-image")
             
             
             .inner-list-typing
             
           .inner-foot
+            .inner-preview-images
             form.inner-form(action="" method="POST")
+              label.chat-action.chat-upload(for="chat-images" aria-label="Chon hinh anh")
+                input#chat-images(
+                  type="file"
+                  name="images"
+                  accept="image/*"
+                  multiple
+                  hidden
+                )
+                i.fa-regular.fa-image
               input(
                 type="text"
                 name="content"
                 placeholder="Nhập nội dung..."
               )
-              span(class="button-icon btn btn-light mx-2")  <i class="fa-regular fa-face-smile"></i>
-              button
+              button.button-icon.chat-action(type="button" aria-label="Chon emoji")
+                i.fa-regular.fa-face-smile
+              button(type="submit" aria-label="Gui tin nhan")
                 i.fa-solid.fa-paper-plane
 
 
-  <div class="tooltip" role="tooltip">
+  .emoji-picker-popup
     emoji-picker(class="light")

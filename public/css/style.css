@@ -561,14 +561,16 @@
   display   : flex;
   flex-wrap : wrap;
   gap       : 6px;
+  max-width : 320px;
 }
 
 .chat .inner-images img {
-  width        : 86px;
-  height       : 86px;
+  width        : 110px;
+  height       : 110px;
   object-fit   : cover;
-  border-radius: 10px;
-  border       : 1px solid #d1d5db;
+  border-radius: 14px;
+  border       : 1px solid #dbe3ef;
+  background   : #fff;
 }
 
 .chat .inner-foot {
@@ -581,7 +583,32 @@
   display    : flex;
   align-items: center;
   gap        : 8px;
-  flex-wrap  : wrap;
+  flex-wrap  : nowrap;
+}
+
+.chat-action {
+  width          : 42px;
+  height         : 42px;
+  border         : 1px solid #cbd5e1;
+  border-radius  : 50%;
+  background     : #fff;
+  color          : #334155;
+  display        : inline-flex;
+  align-items    : center;
+  justify-content: center;
+  cursor         : pointer;
+  transition     : all .2s ease;
+  margin         : 0;
+}
+
+.chat-action:hover {
+  border-color: #2563eb;
+  color       : #2563eb;
+}
+
+.chat-upload {
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
 .chat .inner-form input {
@@ -625,7 +652,7 @@
   color    : #1f2937;
 }
 
-.chat .inner-form button {
+.chat .inner-form button[type="submit"] {
   width          : 42px;
   height         : 42px;
   border         : none;
@@ -639,13 +666,57 @@
   transition     : all .2s ease;
 }
 
-.chat .inner-form button:hover {
+.chat .inner-form button[type="submit"]:hover {
   transform : scale(1.05);
   background: #1e40af;
 }
 
-.chat .inner-form button i {
+.chat .inner-form button[type="submit"] i {
   font-size: 16px;
+}
+
+.chat .inner-preview-images {
+  display      : none;
+  gap          : 10px;
+  flex-wrap    : wrap;
+  margin-bottom: 12px;
+}
+
+.chat .inner-preview-images.show {
+  display: flex;
+}
+
+.chat .inner-preview-item {
+  position     : relative;
+  width        : 78px;
+  height       : 78px;
+  border-radius: 16px;
+  overflow     : hidden;
+  border       : 1px solid #dbe3ef;
+  background   : #f8fafc;
+  box-shadow   : 0 6px 18px rgba(15, 23, 42, 0.08);
+}
+
+.chat .inner-preview-item img {
+  width     : 100%;
+  height    : 100%;
+  object-fit: cover;
+}
+
+.chat .inner-remove-preview {
+  position       : absolute;
+  top            : 6px;
+  right          : 6px;
+  width          : 22px;
+  height         : 22px;
+  border         : none;
+  border-radius  : 50%;
+  background     : rgba(15, 23, 42, 0.75);
+  color          : #fff;
+  display        : flex;
+  align-items    : center;
+  justify-content: center;
+  cursor         : pointer;
 }
 
 .custom-file-container {
@@ -700,14 +771,24 @@
     padding  : 10px 14px;
     font-size: 13px;
   }
+
+  .chat .inner-form {
+    flex-wrap: wrap;
+  }
+
+  .chat .inner-form input {
+    order    : 2;
+    min-width: 100%;
+  }
 }
 
 /* Typing Indicators */
 .box-typing {
-  display      : flex;
-  align-items  : center;
-  gap          : 10px;
-  padding      : 10px 20px;
+  display      : inline-flex;
+  flex-direction: column;
+  align-items  : flex-start;
+  gap          : 6px;
+  padding      : 8px 20px;
   margin-bottom: 5px;
 }
 
@@ -715,7 +796,7 @@
   margin-top: 10px;
 }
 
-.inner-name {
+.box-typing .inner-name {
   font-size    : 12px;
   font-weight  : 600;
   color        : #666;
@@ -723,8 +804,15 @@
 }
 
 .inner-dots {
-  display: flex;
-  gap    : 4px;
+  display      : inline-flex;
+  align-items  : center;
+  gap          : 4px;
+  padding      : 10px 14px;
+  border       : 1px solid #e2e8f0;
+  border-radius: 16px;
+  border-bottom-left-radius: 4px;
+  background   : #fff;
+  box-shadow   : 0 1px 5px rgba(0, 0, 0, 0.06);
 }
 
 .inner-dots span {
@@ -761,13 +849,13 @@
 /* End Typing Indicators */
 
 .chat .inner-body .inner-images img {
-  width        : 80px;
-  height       : 80px;
-  object-fit   : contain;
-  background   : #efefef;
-  padding      : 10px;
+  width        : 110px;
+  height       : 110px;
+  object-fit   : cover;
+  background   : #fff;
+  padding      : 0;
   margin       : 0 5px 5px 0;
-  border-radius: 5px;
+  border-radius: 14px;
 }
 
 .chat .inner-body .inner-outgoing .inner-images {
@@ -781,8 +869,8 @@
 
 /* End Chat */
 
-/* Emoji Picker Tooltip */
-.tooltip {
+/* Emoji Picker */
+.emoji-picker-popup {
   position     : absolute;
   bottom       : 48px;
   right        : 0;
@@ -796,12 +884,14 @@
   opacity      : 0;
   transform    : translateY(10px);
   transition   : all 0.2s ease;
+  pointer-events: none;
 }
 
-.tooltip.shown {
+.emoji-picker-popup.shown {
   visibility: visible;
   opacity   : 1;
   transform : translateY(0);
+  pointer-events: auto;
 }
 
 /* End Emoji Picker */
