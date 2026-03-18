@@ -77,3 +77,16 @@ if (listBtnRefuseFriend.length > 0) {
   });
 }
 // End Chuc nang tu choi ket ban
+
+// SERVER_RETURN_LENGTH_ACCEPT_FRIEND
+const badgeUsersAccept = document.querySelector("[badge-users-accept]")
+if (badgeUsersAccept) {
+  const userId = badgeUsersAccept.getAttribute("badge-users-accept")
+  socket.on("SERVER_RETURN_LENGTH_ACCEPT_FRIEND", (data) => {
+    if (userId === data.userId) {
+
+      badgeUsersAccept.innerHTML = data.lengthAcceptFriends;
+    }
+  })
+}
+// END SERVER_RETURN_LENGTH_ACCEPT_FRIEND

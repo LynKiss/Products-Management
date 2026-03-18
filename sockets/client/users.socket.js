@@ -31,8 +31,16 @@ module.exports = (res) => {
                     { $push: { requestFriends: userId } }
                 )
             }
+            // Lấy độ dài acceptFriends của B trả về cho B
+            const infoUserB = await User.findOne({
+                _id: userId
+            })
+            const lengthAcceptFriends = infoUserB.acceptFriends.length
+            socket.broadcast.emit("SERVER_RETURN_LENGTH_ACCEPT_FRIEND", {
+                userId: userId,
+                lengthAcceptFriends: lengthAcceptFriends
+            })
         });
-        // END Chức năng gửi yêu cầu 
 
         // Chức năng hủy gửi yêu cầu
         socket.on("CLIENT_CANCEL_FRIEND", async (userId) => {
@@ -67,7 +75,6 @@ module.exports = (res) => {
                 )
             }
         });
-        // END Chức năng hủy gửi yêu cầu
 
         // Chức năng từ chối kết bạn
         socket.on("CLIENT_REFUSE_FRIEND", async (userId) => {
@@ -102,7 +109,6 @@ module.exports = (res) => {
                 )
             }
         });
-        // END Chức năng từ chối kết bạn
 
         // Chức năng chấp nhận kết bạn
         socket.on("CLIENT_ACCEPT_FRIEND", async (userId) => {
@@ -152,6 +158,6 @@ module.exports = (res) => {
                 )
             }
         });
-        // END Chức năng chấp nhận  kết bạn
+
     });
 }
