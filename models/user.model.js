@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema(
       default: "active", // có thể làm khi nào đăng ký cần người kích hoạt
     },
     requestFriends: Array, // Lời mời đã gửi
-    acceptFriend: Array,  // Lời mời đã nhận
+    acceptFriends: Array,  // Lời mời đã nhận
     friendList: [  // Danh sách bạn bè
       {
         user_id: String,
