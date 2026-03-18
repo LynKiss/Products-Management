@@ -895,3 +895,90 @@
 }
 
 /* End Emoji Picker */
+
+/* Users */
+.box-user {
+  display        : flex;
+  align-items    : center;
+  gap            : 18px;
+  padding        : 18px;
+  margin-bottom  : 18px;
+  border         : 1px solid #e2e8f0;
+  border-radius  : 20px;
+  background     : linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+  box-shadow     : 0 10px 30px rgba(15, 23, 42, 0.08);
+  transition     : transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.box-user:hover {
+  transform   : translateY(-2px);
+  border-color: #bfdbfe;
+  box-shadow  : 0 16px 36px rgba(37, 99, 235, 0.12);
+}
+
+.box-user .inner-avatar {
+  flex-shrink: 0;
+}
+
+.box-user .inner-avatar img {
+  width        : 88px;
+  height       : 88px;
+  object-fit   : cover;
+  border-radius: 50%;
+  border       : 4px solid #dbeafe;
+  background   : #fff;
+  box-shadow   : 0 8px 20px rgba(59, 130, 246, 0.15);
+}
+
+.box-user .inner-info {
+  flex      : 1;
+  min-width : 0;
+}
+
+.box-user .inner-name {
+  font-size     : 20px;
+  font-weight   : 700;
+  color         : #0f172a;
+  margin-bottom : 10px;
+  line-height   : 1.3;
+}
+
+.box-user .inner-buttons {
+  display   : flex;
+  flex-wrap : wrap;
+  gap       : 8px;
+}
+
+.box-user .inner-buttons .btn {
+  min-width    : 96px;
+  border-radius: 999px;
+  font-weight  : 600;
+  padding      : 6px 14px;
+}
+
+.box-user[data-request-status="none"] .btn-cancel-friend {
+  display: none;
+}
+
+.box-user[data-request-status="pending"] .btn-add-friend {
+  display: none;
+}
+
+@media (max-width: 767.98px) {
+  .box-user {
+    flex-direction: column;
+    align-items   : flex-start;
+    text-align    : left;
+  }
+
+  .box-user .inner-avatar img {
+    width : 76px;
+    height: 76px;
+  }
+
+  .box-user .inner-name {
+    font-size: 18px;
+  }
+}
+
+/* End Users */

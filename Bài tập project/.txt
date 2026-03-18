@@ -1,1 +1,3 @@
 // cài đặt nâng cao
+
++ upload ảnh cho client
