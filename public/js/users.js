@@ -37,3 +37,43 @@ if (listBtnCancelFriend.length > 0) {
   });
 }
 // End Chuc nang huy yeu cau ket ban
+
+// Chuc nang chap nhan ket ban
+const listBtnAcceptFriend = document.querySelectorAll("[btn-accept-friend]");
+if (listBtnAcceptFriend.length > 0) {
+  listBtnAcceptFriend.forEach((button) => {
+    button.addEventListener("click", () => {
+      const userId = button.getAttribute("btn-accept-friend");
+      const boxUser = button.closest(".box-user");
+
+      if (!boxUser || !userId) return;
+
+      boxUser.setAttribute("data-request-status", "add");
+
+      if (typeof socket !== "undefined") {
+        socket.emit("CLIENT_ACCEPT_FRIEND", userId);
+      }
+    });
+  });
+}
+// End Chuc nang chap nhan ket ban
+
+// Chuc nang tu choi ket ban
+const listBtnRefuseFriend = document.querySelectorAll("[btn-refuse-friend]");
+if (listBtnRefuseFriend.length > 0) {
+  listBtnRefuseFriend.forEach((button) => {
+    button.addEventListener("click", () => {
+      const userId = button.getAttribute("btn-refuse-friend");
+      const boxUser = button.closest(".box-user");
+
+      if (!boxUser || !userId) return;
+
+      boxUser.setAttribute("data-request-status", "refuse");
+
+      if (typeof socket !== "undefined") {
+        socket.emit("CLIENT_REFUSE_FRIEND", userId);
+      }
+    });
+  });
+}
+// End Chuc nang tu choi ket ban

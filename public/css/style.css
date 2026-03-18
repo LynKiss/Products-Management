@@ -960,8 +960,56 @@
   display: none;
 }
 
-.box-user[data-request-status="pending"] .btn-add-friend {
+.box-user[data-request-status="pending"] [btn-add-friend] {
   display: none;
+}
+
+.box-user [btn-deleted-friend] {
+  display: none;
+}
+
+.box-user [btn-accepted-friend] {
+  display: none;
+}
+
+.box-user[data-request-status="pending"] [btn-accept-friend] {
+  display: inline-block;
+}
+
+.box-user[data-request-status="pending"] [btn-refuse-friend] {
+  display: inline-block;
+}
+
+.box-user[data-request-status="add"] [btn-accept-friend] {
+  display: none;
+}
+
+.box-user[data-request-status="add"] [btn-accepted-friend] {
+  display: inline-block;
+}
+
+.box-user[data-request-status="add"] [btn-refuse-friend] {
+  display: none;
+}
+
+.box-user[data-request-status="add"] [btn-deleted-friend] {
+  display: none;
+}
+
+.box-user[data-request-status="refuse"] [btn-accept-friend] {
+  display: none;
+}
+
+.box-user[data-request-status="refuse"] [btn-accepted-friend] {
+  display: none;
+}
+
+.box-user[data-request-status="refuse"] [btn-refuse-friend] {
+  display: none;
+}
+
+.box-user[data-request-status="refuse"] [btn-deleted-friend] {
+  display: inline-block;
 }
 
 @media (max-width: 767.98px) {
