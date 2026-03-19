@@ -115,3 +115,21 @@ if (dataUsersAccept) {
   })
 }
 // END SERVER_RETURN_INFO_ACCEPT_FRIEND
+
+
+//SERVER_RETURN_USER_ID_CANCEL_ACCEPT_FRIEND
+socket.on("SERVER_RETURN_USER_ID_CANCEL_ACCEPT_FRIEND", (data) => {
+  const boxUserRemove = document.querySelector(`[data-user-id='${userIdA}']`);
+  if (boxUserRemove) {
+    const dataUsersAccept = document.querySelector("[data-users-accept]")
+    const userIdB = dataUsersAccept.getAttribute("data-users-accept")
+    if (userIdB === data.userIdB) {
+
+      dataUsersAccept.removeChild(boxUserRemove)
+    }
+  }
+})
+//END SERVER_RETURN_USER_ID_CANCEL_ACCEPT_FRIEND
+
+
+
