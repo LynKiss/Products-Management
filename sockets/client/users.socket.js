@@ -40,6 +40,14 @@ module.exports = (res) => {
                 userId: userId,
                 lengthAcceptFriends: lengthAcceptFriends
             })
+            const infoUserA = await User.findOne({
+                _id: myUserId
+            }).select("_id avatar fullName")
+            socket.broadcast.emit("SERVER_RETURN_INFO_ACCEPT_FRIEND", {
+                userId: userId,
+                infoUserA: infoUserA,
+                lengthAcceptFriends: lengthAcceptFriends
+            })
         });
 
         // Chức năng hủy gửi yêu cầu
@@ -74,6 +82,16 @@ module.exports = (res) => {
                     { $pull: { requestFriends: userId } }
                 )
             }
+            // Lấy độ dài acceptFriends của B trả về cho B
+            const infoUserB = await User.findOne({
+                _id: userId
+            })
+            const lengthAcceptFriends = infoUserB.acceptFriends.length
+            socket.broadcast.emit("SERVER_RETURN_LENGTH_ACCEPT_FRIEND", {
+                userId: userId,
+                lengthAcceptFriends: lengthAcceptFriends
+            })
+            // Lấy info của A trả về cho B ( Hiển thị luôn khi đã gửi kb)
         });
 
         // Chức năng từ chối kết bạn
@@ -132,9 +150,10 @@ module.exports = (res) => {
                             user_id: userId,
                             room_chat_id: ""
                         }
+                    },
+                    $pull: {
+                        acceptFriends: userId
                     }
-                }, {
-                    $pull: { acceptFriends: userId }
                 }
                 );
             }
@@ -152,9 +171,11 @@ module.exports = (res) => {
                                 user_id: myUserId,
                                 room_chat_id: ""
                             }
+                        },
+                        $pull: {
+                            requestFriends: myUserId
                         }
-                    },
-                    { $pull: { requestFriends: myUserId } }
+                    }
                 )
             }
         });
