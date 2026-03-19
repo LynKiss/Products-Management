@@ -100,9 +100,9 @@ if (badgeUsersAccept) {
 
 
 // SERVER_RETURN_INFO_ACCEPT_FRIEND
+// Trang lời mời đã nhận 
 const dataUsersAccept = document.querySelector("[data-users-accept]")
 if (dataUsersAccept) {
-  // Trang lời mời đã nhận 
   const userId = dataUsersAccept.getAttribute("data-users-accept")
   socket.on("SERVER_RETURN_INFO_ACCEPT_FRIEND", (data) => {
     if (userId === data.userId) {
@@ -115,10 +115,8 @@ if (dataUsersAccept) {
     }
   })
 
-  // Trang danh sách người dùng
 }
-// END SERVER_RETURN_INFO_ACCEPT_FRIEND
-
+// Trang danh sách người dùng
 const dataUsersNotFriend = document.querySelector("[data-users-not-friend]");
 if (dataUsersNotFriend) {
   const userId = dataUsersNotFriend.getAttribute("data-users-not-friend")
@@ -131,6 +129,7 @@ if (dataUsersNotFriend) {
     }
   })
 }
+// END SERVER_RETURN_INFO_ACCEPT_FRIEND
 
 
 //SERVER_RETURN_USER_ID_CANCEL_ACCEPT_FRIEND
@@ -147,3 +146,19 @@ socket.on("SERVER_RETURN_USER_ID_CANCEL_ACCEPT_FRIEND", (data) => {
   }
 })
 //END SERVER_RETURN_USER_ID_CANCEL_ACCEPT_FRIEND
+
+
+//SERVER_RETURN_USER_STATUS_ONLINE
+socket.on("SERVER_RETURN_USER_STATUS_ONLINE", (data) => {
+  const dataUsersFriend = document.querySelector("[data-users-friend]");
+  if (dataUsersFriend) {
+    const boxUser = dataUsersFriend.querySelector(`[data-user-id="${data.userId}"]`)
+    if (boxUser) {
+      const boxStatus = boxUser.querySelector("[status]")
+      if (boxStatus) {
+        boxStatus.setAttribute("status", data.status)
+      }
+    }
+  }
+})
+//END SERVER_RETURN_USER_STATUS_ONLINE

@@ -10,8 +10,10 @@ const cartMiddleWare = require("../../middlewares/client/cart.middleware");
 const userMiddleWare = require("../../middlewares/client/user.middleware");
 const settingMiddleWare = require("../../middlewares/client/setting.middleware");
 const authMiddleWare = require("../../middlewares/client/requireAuth.middleware");
+
 const usersRoutes = require("./users.route")
 module.exports = (app) => {
+
   app.use(categoryMiddleWare.category); // dùng cho toàn bộ trang web
   app.use(cartMiddleWare.cartId);
   app.use(userMiddleWare.infoUser);

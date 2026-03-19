@@ -34,7 +34,7 @@ module.exports.registerPost = async (req, res) => {
   res.cookie("tokenUser", user.tokenUser);
   res.redirect("/");
 };
-// [POST] /user/login
+// [POST] /user/loginPost
 module.exports.loginPost = async (req, res) => {
   const emailInput = req.body.email || '';
   const passwordInput = req.body.password || '';
@@ -82,18 +82,63 @@ module.exports.loginPost = async (req, res) => {
   }, {
     statusOnline: "online"
   })
+  _io.emit("SERVER_RETURN_USER_STATUS_ONLINE", {
+    userId: user.id,
+    status: "online"
+  })
   res.redirect("/");
 };
 // [GET] /user/logout
 module.exports.logout = async (req, res) => {
-  await User.updateOne({
+  const user = await User.findOne({
     tokenUser: req.cookies.tokenUser
-  }, {
-    statusOnline: "offline"
-  })
+  });
+
+  if (user) {
+    await User.updateOne({
+      _id: user.id
+    }, {
+      statusOnline: "offline"
+    })
+
+    _io.emit("SERVER_RETURN_USER_STATUS_ONLINE", {
+      userId: user.id,
+      status: "offline"
+    })
+  }
+
   res.clearCookie("tokenUser");
   res.clearCookie("cartId");
   res.redirect("/");
+};
+// [POST] /user/offline
+module.exports.offline = async (req, res) => {
+  if (!req.cookies.tokenUser) {
+    return res.sendStatus(200);
+  }
+
+  const user = await User.findOne({
+    tokenUser: req.cookies.tokenUser
+  });
+
+  if (!user) {
+    return res.sendStatus(200);
+  }
+
+  if (user.statusOnline !== "offline") {
+    await User.updateOne({
+      _id: user.id
+    }, {
+      statusOnline: "offline"
+    })
+
+    _io.emit("SERVER_RETURN_USER_STATUS_ONLINE", {
+      userId: user.id,
+      status: "offline"
+    })
+  }
+
+  res.sendStatus(200);
 };
 // [GET] /user/password/forgot
 module.exports.forgotPassword = async (req, res) => {
