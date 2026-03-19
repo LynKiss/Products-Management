@@ -38,13 +38,13 @@ module.exports.registerPost = async (req, res) => {
 module.exports.loginPost = async (req, res) => {
   const emailInput = req.body.email || '';
   const passwordInput = req.body.password || '';
-  
+
   if (!emailInput.trim() || !passwordInput.trim()) {
     req.flash("error", `Vui lòng nhập đầy đủ email và mật khẩu !`);
     res.redirect("/");
     return;
   }
-  
+
   const email = emailInput.trim().toLowerCase();
   const password = passwordInput.trim();
 
@@ -52,13 +52,13 @@ module.exports.loginPost = async (req, res) => {
     email: email,
     deleted: false,
   });
-  
+
   if (user === null) {
     req.flash("error", `Email không tồn tại !`);
     res.redirect("/");
     return;
   }
-  
+
   if (md5(password) !== user.password) {
     req.flash("error", `Mật khẩu không chính xác!`);
     res.redirect("/");
@@ -77,10 +77,20 @@ module.exports.loginPost = async (req, res) => {
   }
 
   res.cookie("tokenUser", user.tokenUser);
+  await User.updateOne({
+    tokenUser: user.tokenUser
+  }, {
+    statusOnline: "online"
+  })
   res.redirect("/");
 };
 // [GET] /user/logout
 module.exports.logout = async (req, res) => {
+  await User.updateOne({
+    tokenUser: req.cookies.tokenUser
+  }, {
+    statusOnline: "offline"
+  })
   res.clearCookie("tokenUser");
   res.clearCookie("cartId");
   res.redirect("/");

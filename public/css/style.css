@@ -943,6 +943,36 @@
   line-height   : 1.3;
 }
 
+.box-user .inner-status {
+  display       : inline-flex;
+  align-items   : center;
+  gap           : 8px;
+  margin-bottom : 14px;
+  font-size     : 14px;
+  font-weight   : 600;
+  color         : #64748b;
+}
+
+.box-user .inner-status::after {
+  content: "Offline";
+}
+
+.box-user .inner-status i {
+  font-size: 10px;
+}
+
+.box-user .inner-status[status="online"] {
+  color: #16a34a;
+}
+
+.box-user .inner-status[status="online"]::after {
+  content: "Đang hoạt động";
+}
+
+.box-user .inner-status[status="offline"] {
+  color: #94a3b8;
+}
+
 .box-user .inner-buttons {
   display   : flex;
   flex-wrap : wrap;
