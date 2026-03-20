@@ -12,12 +12,3 @@ if (showAlert) {
   });
 }
 // End Show alert
-
-const notifyOffline = () => {
-  if (!navigator.sendBeacon) return;
-
-  navigator.sendBeacon("/user/offline", new Blob([], { type: "application/octet-stream" }));
-};
-
-window.addEventListener("pagehide", notifyOffline);
-window.addEventListener("beforeunload", notifyOffline);

@@ -5,7 +5,7 @@ const roomChatSchema = new mongoose.Schema(
         avatar: String,
         typeRoom: String,
         status: String,// ví dụ như chỉ có trưởng được chat , khóa phòng vv...
-        user: [
+        users: [
             {
                 user_id: String,
                 role: String

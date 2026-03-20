@@ -1,4 +1,5 @@
 const User = require("../../models/user.model")
+const RoomChat = require("../../models/rooms-chat.model")
 module.exports = (res) => {
     _io.once("connection", (socket) => {
         // Chức năng gửi yêu cầu 
@@ -140,11 +141,42 @@ module.exports = (res) => {
             // myUserId : id của B
             // userId : id của A
 
-            // Xóa id của A vào acceptFriends của B
+            // Check xem có tồn tại trong danh sách của nhau không 
             const exitsIdAinB = await User.findOne({
                 _id: myUserId,
                 acceptFriends: userId
             })
+            const exitsIdBinA = await User.findOne({
+                _id: userId,
+                requestFriends: myUserId
+            })
+
+            //Tạo phòng chat chung cho 2 người 
+            let roomChat;
+            if (exitsIdAinB && exitsIdBinA) {
+
+                const dataRoom = {
+                    typeRoom: "friend",
+                    users: [
+                        {
+                            user_id: userId,
+                            role: "superAdmin"
+                        },
+                        {
+                            user_id: myUserId,
+                            role: "superAdmin"
+                        }
+                    ],
+
+                }
+                roomChat = new RoomChat(dataRoom);
+                await roomChat.save();
+
+            }
+
+
+            // Xóa id của A vào acceptFriends của B
+
 
             if (exitsIdAinB) {
                 await User.updateOne({
@@ -153,7 +185,7 @@ module.exports = (res) => {
                     $push: {
                         friendList: {
                             user_id: userId,
-                            room_chat_id: ""
+                            room_chat_id: roomChat.id
                         }
                     },
                     $pull: {
@@ -163,10 +195,7 @@ module.exports = (res) => {
                 );
             }
             // Xóa id của B vào requestFriends của A
-            const exitsIdBinA = await User.findOne({
-                _id: userId,
-                requestFriends: myUserId
-            })
+
             if (exitsIdBinA) {
                 await User.updateOne(
                     { _id: userId },
@@ -174,7 +203,7 @@ module.exports = (res) => {
                         $push: {
                             friendList: {
                                 user_id: myUserId,
-                                room_chat_id: ""
+                                room_chat_id: roomChat.id
                             }
                         },
                         $pull: {
