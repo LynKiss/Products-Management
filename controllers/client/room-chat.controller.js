@@ -6,6 +6,7 @@ const User = require("../../models/user.model");
 module.exports.index = async (req, res) => {
   const userId = res.locals.user.id;
   const rooms = await RoomChat.find({
+    typeRoom: "group",
     "users.user_id": userId,
     deleted: false,
   }).select("title avatar");
