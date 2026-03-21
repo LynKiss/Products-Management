@@ -1,3 +1,9 @@
 // cài đặt nâng cao
 
 + upload ảnh cho client
+
+
+//
+
++ thêm thành viên giống produts , push vào mảng , ẩn đi người trong phòng chat 
++ 
