@@ -7,7 +7,7 @@ const session = require("express-session");
 const moment = require("moment");
 var path = require("path");
 
-require("dotenv").config();
+require("dotenv").config({ path: path.resolve(__dirname, ".env") });
 const route = require("./routes/client/index.route");
 const routeAdmin = require("./routes/admin/index.route");
 const database = require("./config/database");
