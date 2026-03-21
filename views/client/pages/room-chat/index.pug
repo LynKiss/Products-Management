@@ -1,0 +1,36 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+block main
+  .container.my-3
+    .row
+      .col-12
+        +box-head("Danh sách phòng")
+
+    .row.mb-3
+      .col-12
+        a(
+          href="#"
+          class="btn btn-sm btn-success"
+        ) Tạo phòng chat
+
+    .row
+      if rooms && rooms.length > 0
+        each room in rooms
+          .col-12.col-md-6
+            .box-room
+              .inner-avatar
+                img(
+                  src=(room.avatar ? room.avatar : "https://img.freepik.com/premium-vector/male-face-avatar-icon-set-flat-design-social-media-profiles_1281173-3806.jpg?w=2000")
+                  alt=room.title
+                )
+              .inner-info
+                .inner-name #{room.title}
+                .inner-buttons
+                  a(
+                    href="#"
+                    class="btn btn-sm btn-primary"
+                  ) Nhắn tin
+      else
+        .col-12
+          .alert.alert-secondary Chưa có phòng chat nào.
