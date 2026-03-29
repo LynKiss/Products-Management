@@ -33,7 +33,7 @@ block main
             
           .inner-foot
             .inner-preview-images
-            form.inner-form(action="" method="POST")
+            form.inner-form(action=`/chat/${roomChatId}` method="POST")
               label.chat-action.chat-upload(for="chat-images" aria-label="Chon hinh anh")
                 input#chat-images(
                   type="file"
@@ -60,4 +60,4 @@ block main
 
 
 block script 
-  script(type="module" src="/js/chat.js")
+  script(type="module" src="/js/chat.client.js")

@@ -20,6 +20,37 @@ module.exports.index = async (req, res) => {
   //  End
   res.render("client/pages/chat/index", {
     pageTitle: "Chat",
-    chats: chats
+    chats: chats,
+    roomChatId: roomChatId
   });
+};
+
+// [POST] /chat/:roomChatId
+module.exports.sendMessage = async (req, res) => {
+  const roomChatId = req.params.roomChatId;
+  const content = (req.body.content || "").trim();
+
+  if (!content) {
+    return res.redirect(`/chat/${roomChatId}`);
+  }
+
+  const chat = new Chat({
+    user_id: res.locals.user.id,
+    content: content,
+    images: [],
+    room_chat_id: roomChatId
+  });
+
+  await chat.save();
+
+  if (global._io) {
+    global._io.to(roomChatId).emit("SERVER_RETURN_MESSAGE", {
+      userId: res.locals.user.id,
+      fullName: res.locals.user.fullName,
+      content: content,
+      images: []
+    });
+  }
+
+  return res.redirect(`/chat/${roomChatId}`);
 };
