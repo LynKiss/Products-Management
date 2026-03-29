@@ -29,8 +29,19 @@ module.exports.index = async (req, res) => {
 module.exports.sendMessage = async (req, res) => {
   const roomChatId = req.params.roomChatId;
   const content = (req.body.content || "").trim();
+  const wantsJson =
+    req.xhr ||
+    req.get("x-requested-with") === "XMLHttpRequest" ||
+    req.accepts(["html", "json"]) === "json";
 
   if (!content) {
+    if (wantsJson) {
+      return res.status(400).json({
+        success: false,
+        message: "Noi dung tin nhan dang rong."
+      });
+    }
+
     return res.redirect(`/chat/${roomChatId}`);
   }
 
@@ -49,6 +60,18 @@ module.exports.sendMessage = async (req, res) => {
       fullName: res.locals.user.fullName,
       content: content,
       images: []
+    });
+  }
+
+  if (wantsJson) {
+    return res.json({
+      success: true,
+      message: {
+        userId: res.locals.user.id,
+        fullName: res.locals.user.fullName,
+        content: content,
+        images: []
+      }
     });
   }
 

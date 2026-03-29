@@ -115,6 +115,40 @@ const hideTyping = () => {
   }
 };
 
+const appendMessageToChat = (data) => {
+  if (!bodyChat || !myId) {
+    return;
+  }
+
+  bodyChat.insertAdjacentHTML("beforeend", renderMessage(data, myId));
+
+  if (gallery) {
+    gallery.update();
+  }
+
+  scrollChatToBottom();
+};
+
+const sendMessageByHttp = async (content) => {
+  const response = await fetch(formSendData.action, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+      "Accept": "application/json",
+      "X-Requested-With": "XMLHttpRequest"
+    },
+    body: new URLSearchParams({ content }).toString()
+  });
+
+  const result = await response.json().catch(() => null);
+
+  if (!response.ok || !result?.success || !result.message) {
+    throw new Error(result?.message || "Gui tin nhan that bai.");
+  }
+
+  appendMessageToChat(result.message);
+};
+
 const typingShow = () => {
   if (!isRealtimeChatReady()) {
     return;
@@ -158,7 +192,7 @@ if (previewImages) {
 }
 
 if (formSendData) {
-  formSendData.addEventListener("submit", (event) => {
+  formSendData.addEventListener("submit", async (event) => {
     const content = event.target.elements.content.value.trim();
     const images = getSelectedImages();
 
@@ -168,10 +202,22 @@ if (formSendData) {
     }
 
     if (!isRealtimeChatReady()) {
+      event.preventDefault();
+
       if (images.length > 0) {
-        event.preventDefault();
         window.alert("Ket noi realtime dang gap loi. Ban hay gui tin nhan text hoac thu lai sau.");
+        return;
       }
+
+      try {
+        await sendMessageByHttp(content);
+        event.target.elements.content.value = "";
+        clearSelectedImages();
+        hideTyping();
+      } catch (error) {
+        window.alert(error.message || "Gui tin nhan that bai.");
+      }
+
       return;
     }
 
@@ -185,17 +231,7 @@ if (formSendData) {
 
 if (hasSocketClient()) {
   socket.on("SERVER_RETURN_MESSAGE", (data) => {
-    if (!bodyChat || !myId) {
-      return;
-    }
-
-    bodyChat.insertAdjacentHTML("beforeend", renderMessage(data, myId));
-
-    if (gallery) {
-      gallery.update();
-    }
-
-    scrollChatToBottom();
+    appendMessageToChat(data);
   });
 }
 
