@@ -1,25 +1,24 @@
-extends ../../layouts/default.pug
+﻿extends ../../layouts/default.pug
 include ../../mixins/box-head.pug
 include ../../mixins/product-layout.pug
 
+block main
+    .home-page
+        .container
+            h1.page-title Trang chủ
 
-block main 
- 
-   
-
-    h1 Trang chủ 
-        .section-products-featured.my-5
-            .containers
-                .row
-                .col-12
-                    +box-head("Sản phẩm nổi bật")
-
-                +product-grid(productsFeatured)
-        .section-products-featured.my-5
+        .section-products-featured
             .container
                 .row
-                .col-12
-                    +box-head("Sản phẩm mới")
+                    .col-12
+                        +box-head("Sản phẩm nổi bật")
+
+                +product-grid(productsFeatured)
+
+        .section-products-featured
+            .container
+                .row
+                    .col-12
+                        +box-head("Sản phẩm mới")
 
                 +product-grid(productsNew)
-                

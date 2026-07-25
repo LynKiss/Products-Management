@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" role="img" aria-label="Phone category">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eef6ff"/><stop offset="1" stop-color="#f8fafc"/></linearGradient>
+    <linearGradient id="p1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#111827"/><stop offset="1" stop-color="#2563eb"/></linearGradient>
+    <linearGradient id="p2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fce7f3"/><stop offset="1" stop-color="#db2777"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="20" stdDeviation="18" flood-color="#0f172a" flood-opacity=".18"/></filter>
+  </defs>
+  <rect width="720" height="420" fill="url(#bg)"/>
+  <ellipse cx="360" cy="360" rx="210" ry="24" fill="#0f172a" opacity=".1"/>
+  <g filter="url(#shadow)">
+    <rect x="224" y="54" width="154" height="280" rx="30" fill="#0f172a" transform="rotate(-8 301 194)"/>
+    <rect x="238" y="79" width="126" height="225" rx="20" fill="url(#p1)" transform="rotate(-8 301 194)"/>
+    <rect x="350" y="46" width="162" height="294" rx="32" fill="#831843" transform="rotate(8 431 193)"/>
+    <rect x="365" y="72" width="132" height="236" rx="21" fill="url(#p2)" transform="rotate(8 431 193)"/>
+  </g>
+</svg>

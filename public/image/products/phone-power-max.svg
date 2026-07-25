@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 540" role="img" aria-label="Power max phone">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fffaf0"/><stop offset="1" stop-color="#eef7ee"/></linearGradient>
+    <linearGradient id="body" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#064e3b"/><stop offset=".52" stop-color="#10b981"/><stop offset="1" stop-color="#052e16"/></linearGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fef9c3"/><stop offset=".5" stop-color="#84cc16"/><stop offset="1" stop-color="#14532d"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="24" stdDeviation="22" flood-color="#14532d" flood-opacity=".2"/></filter>
+  </defs>
+  <rect width="720" height="540" fill="url(#bg)"/>
+  <ellipse cx="360" cy="468" rx="166" ry="23" fill="#14532d" opacity=".12"/>
+  <g filter="url(#shadow)" transform="translate(248 60)">
+    <rect width="224" height="420" rx="42" fill="url(#body)"/>
+    <rect x="14" y="14" width="196" height="392" rx="32" fill="#052e16"/>
+    <rect x="22" y="39" width="180" height="342" rx="25" fill="url(#screen)"/>
+    <rect x="86" y="26" width="52" height="7" rx="4" fill="#064e3b"/>
+    <path d="M130 75 74 216h43l-24 110 70-148h-47z" fill="#ecfccb" opacity=".82"/>
+    <path d="M22 297c37-38 71-47 109-9 20 21 37 49 71 57v36H22z" fill="#fff" opacity=".15"/>
+  </g>
+</svg>

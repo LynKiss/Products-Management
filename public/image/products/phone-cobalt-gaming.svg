@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 540" role="img" aria-label="Cobalt gaming phone">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6f9ff"/><stop offset="1" stop-color="#e7eefc"/></linearGradient>
+    <linearGradient id="body" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#172554"/><stop offset=".52" stop-color="#2563eb"/><stop offset="1" stop-color="#020617"/></linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#67e8f9"/><stop offset="1" stop-color="#a78bfa"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="24" stdDeviation="22" flood-color="#1e3a8a" flood-opacity=".24"/></filter>
+  </defs>
+  <rect width="720" height="540" fill="url(#bg)"/>
+  <ellipse cx="360" cy="468" rx="174" ry="24" fill="#1e3a8a" opacity=".13"/>
+  <g filter="url(#shadow)" transform="translate(243 62)">
+    <rect width="234" height="416" rx="40" fill="url(#body)"/>
+    <rect x="18" y="18" width="198" height="380" rx="30" fill="#0f172a" opacity=".7"/>
+    <path d="M117 52 190 165l-73 205L44 165z" fill="url(#accent)" opacity=".92"/>
+    <path d="M117 90 164 166l-47 140-47-140z" fill="#0f172a" opacity=".78"/>
+    <path d="M117 116 145 166l-28 86-28-86z" fill="#22d3ee" opacity=".95"/>
+    <circle cx="117" cy="211" r="16" fill="#e0f2fe"/>
+    <rect x="84" y="30" width="66" height="8" rx="4" fill="#020617"/>
+  </g>
+</svg>

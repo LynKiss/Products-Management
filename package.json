@@ -8,6 +8,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --inspect index.js",
+    "seed:phones": "node scripts/seed-phone-products.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

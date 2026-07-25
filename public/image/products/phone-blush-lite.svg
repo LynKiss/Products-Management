@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 540" role="img" aria-label="Blush lite phone">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff7fb"/><stop offset="1" stop-color="#f5eef8"/></linearGradient>
+    <linearGradient id="body" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fce7f3"/><stop offset=".55" stop-color="#f9a8d4"/><stop offset="1" stop-color="#be185d"/></linearGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fdf2f8"/><stop offset=".5" stop-color="#ec4899"/><stop offset="1" stop-color="#831843"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="24" stdDeviation="22" flood-color="#9d174d" flood-opacity=".18"/></filter>
+  </defs>
+  <rect width="720" height="540" fill="url(#bg)"/>
+  <ellipse cx="360" cy="468" rx="152" ry="22" fill="#9d174d" opacity=".11"/>
+  <g filter="url(#shadow)" transform="translate(258 70)">
+    <rect width="204" height="398" rx="40" fill="url(#body)"/>
+    <rect x="13" y="13" width="178" height="372" rx="30" fill="#831843"/>
+    <rect x="21" y="38" width="162" height="323" rx="24" fill="url(#screen)"/>
+    <circle cx="102" cy="25" r="5" fill="#4a1028"/>
+    <circle cx="68" cy="113" r="42" fill="#fff" opacity=".22"/>
+    <circle cx="139" cy="214" r="64" fill="#fbcfe8" opacity=".18"/>
+    <path d="M21 270c39-33 69-39 100-8 18 18 32 43 62 49v50H21z" fill="#fff" opacity=".18"/>
+  </g>
+</svg>

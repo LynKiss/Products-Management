@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 540" role="img" aria-label="Fold edge phone">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f8fafc"/><stop offset="1" stop-color="#e2e8f0"/></linearGradient>
+    <linearGradient id="screenLeft" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a7f3d0"/><stop offset=".48" stop-color="#0f766e"/><stop offset="1" stop-color="#042f2e"/></linearGradient>
+    <linearGradient id="screenRight" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#bae6fd"/><stop offset=".55" stop-color="#0ea5e9"/><stop offset="1" stop-color="#0f172a"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="24" stdDeviation="22" flood-color="#0f172a" flood-opacity=".22"/></filter>
+  </defs>
+  <rect width="720" height="540" fill="url(#bg)"/>
+  <ellipse cx="360" cy="468" rx="205" ry="25" fill="#0f172a" opacity=".12"/>
+  <g filter="url(#shadow)" transform="translate(184 88)">
+    <rect width="170" height="356" rx="28" fill="#0f172a"/>
+    <rect x="14" y="18" width="142" height="320" rx="20" fill="url(#screenLeft)"/>
+    <rect x="178" y="-10" width="182" height="376" rx="30" fill="#111827"/>
+    <rect x="193" y="9" width="152" height="338" rx="21" fill="url(#screenRight)"/>
+    <rect x="166" width="26" height="356" rx="13" fill="#334155"/>
+    <path d="M28 258c30-45 62-50 95-12 10 12 20 27 33 35v57H28z" fill="#fff" opacity=".16"/>
+    <path d="M207 236c34-30 60-41 93-10 16 15 28 37 45 44v77H207z" fill="#fff" opacity=".16"/>
+  </g>
+</svg>
