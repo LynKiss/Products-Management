@@ -9,6 +9,7 @@
   "scripts": {
     "start": "nodemon --inspect index.js",
     "seed:phones": "node scripts/seed-phone-products.js",
+    "seed:admin": "node scripts/seed-admin.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

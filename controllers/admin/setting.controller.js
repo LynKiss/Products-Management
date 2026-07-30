@@ -1,4 +1,5 @@
 const SettingGeneral = require("../../models/settings-general.model");
+const { prefixAdmin } = require("../../config/system");
 // [GET] /admin/setting/general
 module.exports.general = async (req, res) => {
   const settingGeneral = await SettingGeneral.findOne({}); // Lấy ra bản ghi đầu tiên
@@ -16,4 +17,6 @@ module.exports.generalPatch = async (req, res) => {
     const records = new SettingGeneral(req.body);
     await records.save();
   }
+  req.flash("success", "Cap nhat cai dat chung thanh cong !");
+  res.redirect(`${prefixAdmin}/setting/general`);
 };

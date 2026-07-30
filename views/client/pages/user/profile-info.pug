@@ -1,0 +1,38 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+block main
+  .container.my-4
+    .row
+      .col-12
+        +box-head("Thong tin tai khoan")
+
+    .row
+      .col-12.col-md-4
+        img(
+          src=(user.avatar ? user.avatar : "https://img.freepik.com/premium-vector/male-face-avatar-icon-set-flat-design-social-media-profiles_1281173-3806.jpg?w=2000")
+          alt=user.fullName
+          class="img-fluid rounded mb-3"
+        )
+
+      .col-12.col-md-8
+        table(class="table table-bordered")
+          tr
+            th Ho ten
+            td #{user.fullName}
+          tr
+            th Email
+            td #{user.email}
+          tr
+            th So dien thoai
+            td #{user.phone || "Chua cap nhat"}
+          tr
+            th Trang thai
+            td
+              if user.status === "active"
+                span(class="badge badge-success") Hoat dong
+              else
+                span(class="badge badge-danger") Dung hoat dong
+
+        a(href="/user/edit" class="btn btn-primary mr-2") Sua thong tin
+        a(href="/user/change-password" class="btn btn-warning") Doi mat khau

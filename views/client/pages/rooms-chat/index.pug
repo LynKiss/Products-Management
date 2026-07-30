@@ -28,7 +28,7 @@ block main
                 .inner-name #{room.title}
                 .inner-buttons
                   a(
-                    href="#"
+                    href=`/chat/${room.id}`
                     class="btn btn-sm btn-primary"
                   ) Nhắn tin
       else

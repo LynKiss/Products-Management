@@ -89,6 +89,22 @@ block main
         +permission-row("Chỉnh sửa", "accounts_edit", records)
         +permission-row("Xóa", "accounts_delete", records)
 
+        tr
+          td(colspan=totalColumns class="bg-light")
+            b Quản lý user
+
+        +permission-row("Xem", "users_view", records)
+        +permission-row("Thêm mới", "users_create", records)
+        +permission-row("Chỉnh sửa", "users_edit", records)
+        +permission-row("Xóa", "users_delete", records)
+
+        tr
+          td(colspan=totalColumns class="bg-light")
+            b Cài đặt chung
+
+        +permission-row("Xem", "settings-general_view", records)
+        +permission-row("Chỉnh sửa", "settings-general_edit", records)
+
   
 
     //- Form ẩn để gửi dữ liệu lên server

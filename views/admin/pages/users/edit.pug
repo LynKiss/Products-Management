@@ -1,0 +1,46 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  if(role && role.permissions && role.permissions.includes("users_edit"))
+    h1 Sua user
+    +alertSuccess(5000)
+    +alertError(5000)
+
+    form(action=`${prefixAdmin}/users/edit/${userEdit.id}?_method=PATCH` method="POST" enctype="multipart/form-data")
+      div(class="form-group")
+        label(for="fullName") Ho ten *
+        input(type="text" class="form-control" id="fullName" name="fullName" value=userEdit.fullName required)
+
+      div(class="form-group")
+        label(for="email") Email *
+        input(type="email" class="form-control" id="email" name="email" value=userEdit.email required)
+
+      div(class="form-group")
+        label(for="password") Mat khau moi
+        input(type="password" class="form-control" id="password" name="password")
+
+      div(class="form-group")
+        label(for="phone") So dien thoai
+        input(type="text" class="form-control" id="phone" name="phone" value=userEdit.phone)
+
+      div(class="form-group" upload-image)
+        label(for="avatar") Avatar
+        input(type="file" class="form-control-file" id="avatar" name="avatar" accept="image/*" upload-image-input)
+        .image-preview-container(upload-image-preview-wrapper)
+          .image-preview-content
+            img(src=userEdit.avatar class="image-preview" upload-image-preview)
+
+      div(class="form-group form-check form-check-inline")
+        input(type="radio" class="form-check-input" id="statusActive" name="status" value="active" checked=(userEdit.status === "active" ? true : false))
+        label(for="statusActive" class="form-check-label") Hoat dong
+
+      div(class="form-group form-check form-check-inline")
+        input(type="radio" class="form-check-input" id="statusInactive" name="status" value="inactive" checked=(userEdit.status === "inactive" ? true : false))
+        label(for="statusInactive" class="form-check-label") Dung hoat dong
+
+      div(class="form-group")
+        button(type="submit" class="btn btn-primary") Cap nhat
+        a(href=`${prefixAdmin}/users` class="btn btn-secondary ml-2") Quay lai
+  else
+    h1 Khong co quyen truy cap

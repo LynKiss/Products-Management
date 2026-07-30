@@ -1,22 +1,24 @@
-extends ../../layouts/default.pug
+﻿extends ../../layouts/default.pug
 include ../../mixins/box-head.pug
+include ../../mixins/alert.pug
 
 block main
   .container.my-3
     include ../../partials/list-btn-user.pug
-    .row
-      .col-12
-        +box-head("Chat")
-
+    +alertSuccess(5000)
+    +alertError(5000)
 
     .row
       .col-12
+        +box-head(roomChat.title || "Chat")
+
+    .row
+      .col-12.col-lg-8
         .chat(my-id=user.id)
-
           .inner-body
-            each chat in chats  
-              div(class=(chat.user_id == user.id ? "inner-outgoing" :"inner-incoming"))
-                if(chat.user_id != user.id)
+            each chat in chats
+              div(class=(chat.user_id == user.id ? "inner-outgoing" : "inner-incoming"))
+                if(chat.user_id != user.id && chat.infoUser)
                   .inner-name #{chat.infoUser.fullName}
                 if(chat.content)
                   .inner-content
@@ -27,37 +29,56 @@ block main
                       - const imageSrc = image?.secure_url || image?.url || image
                       if imageSrc
                         img(src=imageSrc alt="chat-image")
-            
-            
             .inner-list-typing
-            
+
           .inner-foot
             .inner-preview-images
             form.inner-form(action=`/chat/${roomChatId}` method="POST")
               label.chat-action.chat-upload(for="chat-images" aria-label="Chon hinh anh")
-                input#chat-images(
-                  type="file"
-                  name="images"
-                  accept="image/*"
-                  multiple
-                  hidden
-                )
+                input#chat-images(type="file" name="images" accept="image/*" multiple hidden)
                 i.fa-regular.fa-image
-              input(
-                type="text"
-                name="content"
-                placeholder="Nhập nội dung..."
-              )
+              input(type="text" name="content" placeholder="Nhap noi dung...")
               button.button-icon.chat-action(type="button" aria-label="Chon emoji")
                 i.fa-regular.fa-face-smile
               button(type="submit" aria-label="Gui tin nhan")
                 i.fa-solid.fa-paper-plane
 
+      .col-12.col-lg-4
+        .room-panel
+          .room-panel__head
+            h5 Thanh vien
+            if isRoomSuperAdmin
+              form(action=`/rooms-chat/delete/${roomChatId}?_method=DELETE` method="POST" onsubmit="return confirm('Ban co chac muon xoa phong chat?')")
+                button(type="submit" class="btn btn-sm btn-danger") Xoa phong
+
+          .room-members(data-room-members)
+            each member in members
+              .room-member(data-user-id=member.id)
+                img(src=(member.avatar ? member.avatar : "https://img.freepik.com/premium-vector/male-face-avatar-icon-set-flat-design-social-media-profiles_1281173-3806.jpg?w=2000") alt=member.fullName)
+                .room-member__info
+                  .room-member__name #{member.fullName}
+                  .room-member__meta
+                    span.room-member__status(status=(member.statusOnline || "offline"))
+                    span.badge.badge-secondary #{member.roleInRoom === "supperAdmin" ? "superAdmin" : member.roleInRoom}
+                if isRoomSuperAdmin && member.roleInRoom === "user"
+                  form(action=`/rooms-chat/change-role/${roomChatId}/${member.id}?_method=PATCH` method="POST")
+                    button(type="submit" class="btn btn-sm btn-outline-primary") Len admin
+
+          if isRoomAdmin
+            hr
+            h5 Them thanh vien
+            if usersCanAdd && usersCanAdd.length > 0
+              form(action=`/rooms-chat/add-users/${roomChatId}?_method=PATCH` method="POST")
+                each item in usersCanAdd
+                  div(class="form-check")
+                    input(class="form-check-input" type="checkbox" value=item.id id=`add-user-${item.id}` name="usersId")
+                    label(class="form-check-label" for=`add-user-${item.id}`) #{item.fullName}
+                button(type="submit" class="btn btn-primary btn-sm mt-2") Them
+            else
+              .alert.alert-secondary Chua co ban be nao de them.
 
   .emoji-picker-popup
     emoji-picker(class="light")
 
-
-
-block script 
+block script
   script(type="module" src="/js/chat.client.js")

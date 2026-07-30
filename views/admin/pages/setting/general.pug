@@ -1,87 +1,47 @@
-extends ../../layouts/default.pug
+﻿extends ../../layouts/default.pug
 include ../../mixins/alert.pug
 
 block main
-  h1 Cài đặt chung
+  if(role && role.permissions && role.permissions.includes("settings-general_view"))
+    h1 Cai dat chung
 
-  +alertError(5000)
-  +alertSuccess(5000)
+    +alertError(5000)
+    +alertSuccess(5000)
 
-  form(
-    action=`${prefixAdmin}/setting/general?_method=PATCH`
-    method="POST"
-    enctype="multipart/form-data"
-  )
-    .form-group
-      label(for="websiteName") Tên website
-      input(
-        type="text"
-        class="form-control"
-        id="websiteName"
-        name="websiteName"
-        value=(settingGeneral? settingGeneral.websiteName : "")
-      )
+    form(
+      action=`${prefixAdmin}/setting/general?_method=PATCH`
+      method="POST"
+      enctype="multipart/form-data"
+    )
+      .form-group
+        label(for="websiteName") Ten website
+        input(type="text" class="form-control" id="websiteName" name="websiteName" value=(settingGeneral ? settingGeneral.websiteName : ""))
 
-    .form-group(upload-image)
-      label(for="logo") Logo
-      input(
-        type="file"
-        class="form-control-file"
-        id="logo"
-        name="logo"
-        accept="image/*"
-        upload-image-input
-      )
-      .image-preview-container(upload-image-preview-wrapper)
-        .image-preview-content
-          img(
-            src=(settingGeneral? settingGeneral.logo : "")
-            class="image-preview"
-            upload-image-preview
-          )
+      .form-group(upload-image)
+        label(for="logo") Logo
+        input(type="file" class="form-control-file" id="logo" name="logo" accept="image/*" upload-image-input)
+        .image-preview-container(upload-image-preview-wrapper)
+          .image-preview-content
+            img(src=(settingGeneral ? settingGeneral.logo : "") class="image-preview" upload-image-preview)
 
-    .form-group
-      label(for="phone") Số điện thoại
-      input(
-        type="text"
-        class="form-control"
-        id="phone"
-        name="phone"
-        value=(settingGeneral? settingGeneral.phone : "")
-      )
+      .form-group
+        label(for="phone") So dien thoai
+        input(type="text" class="form-control" id="phone" name="phone" value=(settingGeneral ? settingGeneral.phone : ""))
 
-    .form-group
-      label(for="email") Email
-      input(
-        type="email"
-        class="form-control"
-        id="email"
-        name="email"
-        value=(settingGeneral? settingGeneral.email : "")
-      )
+      .form-group
+        label(for="email") Email
+        input(type="email" class="form-control" id="email" name="email" value=(settingGeneral ? settingGeneral.email : ""))
 
-    .form-group
-      label(for="address") Địa chỉ
-      input(
-        type="text"
-        class="form-control"
-        id="address"
-        name="address"
-        value=(settingGeneral? settingGeneral.address : "")
-      )
+      .form-group
+        label(for="address") Dia chi
+        input(type="text" class="form-control" id="address" name="address" value=(settingGeneral ? settingGeneral.address : ""))
 
-    .form-group
-      label(for="copyright") Copyright
-      input(
-        type="text"
-        class="form-control"
-        id="copyright"
-        name="copyright"
-        value=(settingGeneral? settingGeneral.copyright : "")
-      )
+      .form-group
+        label(for="copyright") Copyright
+        input(type="text" class="form-control" id="copyright" name="copyright" value=(settingGeneral ? settingGeneral.copyright : ""))
 
-    .form-group
-      button(
-        type="submit"
-        class="btn btn-primary"
-      ) Cập nhật
+      .form-group
+        if(role && role.permissions && role.permissions.includes("settings-general_edit"))
+          button(type="submit" class="btn btn-primary") Cap nhat
+  else
+    h1 Khong co quyen truy cap
